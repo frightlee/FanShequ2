@@ -1,3 +1,36 @@
 <resources>
-    <string name="app_name">FanShequ_2</string>
+    <string name="app_name">帆社区</string>
+
+    <string name="sw_license">Copyright FanHong All Rights Reserved.</string>
+
+    <string name="tab_home">首页</string>
+    <string name="tab_service">服务</string>
+    <string name="tab_door">门禁</string>
+    <string name="tab_interact">互动</string>
+    <string name="tab_mine">我的</string>
+
+    <string name="shequgonggao">社区公告</string>
+    <string name="wuyezhixing">物业之星</string>
+    <string name="zhaoshangdaili">招商代理</string>
+    <string name="super_service">特色服务</string>
+    <string name="often_service">常用服务</string>
+    <string name="ylgh">医疗挂号</string>
+    <string name="xxyl">休闲娱乐</string>
+    <string name="mydy">猫眼电影</string>
+    <string name="hwwl">海外玩乐</string>
+
+    <string name="bianmin">便民服务</string>
+    <string name="service_pay">生活缴费</string>
+    <string name="service_dai">代办年审</string>
+    <string name="service_store">社区卖场</string>
+    <string name="service_lock">紧急开锁</string>
+    <string name="service_park">闲时停车</string>
+    <string name="service_fix">上门维修</string>
+    <string name="service_jd">家电维修</string>
+    <string name="service_kd">代发快递</string>
+    <string name="service_clean">家政服务</string>
+    <string name="service_talk">社区互动</string>
+    <string name="service_es">二手市场</string>
+    <string name="service_zsdl">招商代理</string>
+    <string name="service_dang">政务系统</string>
 </resources>
