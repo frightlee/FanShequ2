@@ -8,4 +8,15 @@
         <!--<item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
+    <style name="home_tab_button">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@drawable/home_tab_selctor</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:drawablePadding">3dp</item>
+        <item name="android:padding">3dp</item>
+    </style>
 </resources>
