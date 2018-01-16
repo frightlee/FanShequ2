@@ -7,7 +7,12 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.ImageView
+import com.fanhong.cn.door_page.DoorFragment
+import com.fanhong.cn.home_page.CommunityFragment
 import com.fanhong.cn.home_page.HomeFragment
+import com.fanhong.cn.home_page.ServiceFragment
+import com.fanhong.cn.user_page.UserFragment
+import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
@@ -19,16 +24,15 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
         initViews()
     }
 
     private fun initViews() {
         fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
+        fragments.add(ServiceFragment())
+        fragments.add(DoorFragment())
+        fragments.add(CommunityFragment())
+        fragments.add(UserFragment())
         val pagerAdapter: FragmentPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): android.support.v4.app.Fragment = fragments[position]
             override fun getCount(): Int = fragments.size
@@ -67,7 +71,6 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
-
         rg_bottom.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.tab_home->{
@@ -104,4 +107,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 用户登录方法
+     */
+    fun onLogin(v:View){
+        ToastUtil.showToast("Login clicked")
+    }
 }

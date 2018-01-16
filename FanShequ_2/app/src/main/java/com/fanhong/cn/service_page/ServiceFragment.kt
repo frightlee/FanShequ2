@@ -15,10 +15,16 @@ import kotlinx.android.synthetic.main.activity_top.*
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class ServiceFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_home, container, false)
+        return inflater?.inflate(R.layout.fragment_service, container, false)
+    }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        img_back.visibility=View.GONE
+        tv_title.text="服务"
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

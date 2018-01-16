@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoRelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_layout"
     android:layout_width="match_parent"
     android:layout_height="100px"
-    android:id="@+id/top_layout"
     android:layout_alignParentTop="true"
     android:background="@color/skyblue">
+
     <ImageView
         android:id="@+id/img_back"
         android:layout_width="wrap_content"
@@ -30,11 +30,11 @@
         android:id="@+id/top_extra"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:textSize="36px"
-        android:textColor="@color/white"
-        android:padding="10px"
         android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:padding="10px"
         android:text="签到"
-        android:visibility="invisible"/>
+        android:textColor="@color/white"
+        android:textSize="36px"
+        android:visibility="invisible" />
 </com.zhy.autolayout.AutoRelativeLayout>

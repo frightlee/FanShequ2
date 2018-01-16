@@ -34,6 +34,21 @@
     <string name="service_zsdl">招商代理</string>
     <string name="service_dang">政务系统</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--个人中心-->
+    <string name="keylogin">点击头像登录</string>
+    <string name="usersettings">账号设置</string>
+    <string name="newsnotice">消息通知</string>
+    <string name="mytradeno">我的订单</string>
+    <string name="kehurexian">客服热线</string>
+    <string name="Customerhotline">023-68872002</string>
+    <string name="tongyongsz">通用设置</string>
+    <string name="aboutour">关于我们</string>
+
+    <!--登录注册-->
+    <string name="login_user">请输入手机号</string>
+    <string name="login_password">请输入密码</string>
+    <string name="login_code">请输入右侧验证码</string>
+    <string name="login">登录</string>
+    <string name="forgot">忘记密码？</string>
+    <string name="register">没有账号？立即注册</string>
 </resources>
