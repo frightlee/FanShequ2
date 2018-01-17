@@ -1,5 +1,6 @@
 package com.fanhong.cn
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
@@ -11,13 +12,15 @@ import com.fanhong.cn.door_page.DoorFragment
 import com.fanhong.cn.home_page.CommunityFragment
 import com.fanhong.cn.home_page.HomeFragment
 import com.fanhong.cn.home_page.ServiceFragment
+import com.fanhong.cn.login_pages.LoginActivity
 import com.fanhong.cn.user_page.UserFragment
-import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.activity_home.*
 import java.util.*
 
 
 class HomeActivity : AppCompatActivity() {
+
+    private val ACTION_LOGIN: Int = 11
 
     private val fragments: MutableList<Fragment> = ArrayList()
 
@@ -56,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
                         tab_service.isChecked = true
                         setFloatIconsVisible(1)
                     }
-                    2-> {
+                    2 -> {
                         tab_door.isChecked = true
                         setFloatIconsVisible(2)
                     }
@@ -72,25 +75,25 @@ class HomeActivity : AppCompatActivity() {
             }
         })
         rg_bottom.setOnCheckedChangeListener { group, checkedId ->
-            when(checkedId){
-                R.id.tab_home->{
-                    home_viewpager.currentItem=0
+            when (checkedId) {
+                R.id.tab_home -> {
+                    home_viewpager.currentItem = 0
                     setFloatIconsVisible(0)
                 }
-                R.id.tab_service->{
-                    home_viewpager.currentItem=1
+                R.id.tab_service -> {
+                    home_viewpager.currentItem = 1
                     setFloatIconsVisible(1)
                 }
-                R.id.tab_door->{
-                    home_viewpager.currentItem=2
+                R.id.tab_door -> {
+                    home_viewpager.currentItem = 2
                     setFloatIconsVisible(2)
                 }
-                R.id.tab_interaction->{
-                    home_viewpager.currentItem=3
+                R.id.tab_interaction -> {
+                    home_viewpager.currentItem = 3
                     setFloatIconsVisible(3)
                 }
-                R.id.tab_user->{
-                    home_viewpager.currentItem=4
+                R.id.tab_user -> {
+                    home_viewpager.currentItem = 4
                     setFloatIconsVisible(4)
                 }
             }
@@ -110,7 +113,15 @@ class HomeActivity : AppCompatActivity() {
     /**
      * 用户登录方法
      */
-    fun onLogin(v:View){
-        ToastUtil.showToast("Login clicked")
+    fun onLogin(v: View) {
+        val i = Intent(this, LoginActivity::class.java)
+        startActivityForResult(i, ACTION_LOGIN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            ACTION_LOGIN->{}
+        }
     }
 }
