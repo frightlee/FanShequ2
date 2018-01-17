@@ -34,7 +34,7 @@ class HomeActivity : AppCompatActivity() {
         fragments.add(CommunityFragment())
         fragments.add(UserFragment())
         val pagerAdapter: FragmentPagerAdapter = object : FragmentPagerAdapter(supportFragmentManager) {
-            override fun getItem(position: Int): android.support.v4.app.Fragment = fragments[position]
+            override fun getItem(position: Int): Fragment = fragments[position]
             override fun getCount(): Int = fragments.size
         }
         home_viewpager.adapter = pagerAdapter

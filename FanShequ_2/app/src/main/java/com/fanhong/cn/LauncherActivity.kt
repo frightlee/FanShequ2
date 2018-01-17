@@ -15,8 +15,8 @@ class LauncherActivity : Activity() {
         val isFirstStart = pref.getBoolean(App.FIRST_START, true)
         if (isFirstStart) {
             //TODO: show welcome pages here when first start
-            pref.edit().putBoolean(App.FIRST_START, false).apply()
             Handler().postDelayed({ startActivity(Intent(this@LauncherActivity, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)) }, 3000)
+            pref.edit().putBoolean(App.FIRST_START, false).commit()
         } else
             Handler().postDelayed({ startActivity(Intent(this@LauncherActivity, HomeActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)) }, 3000)
     }
