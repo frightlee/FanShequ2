@@ -18,7 +18,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50px"
             android:paddingLeft="24px"
             android:paddingRight="24px"
             android:src="@mipmap/ico_account" />
@@ -44,7 +44,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50px"
             android:paddingLeft="24px"
             android:paddingRight="24px"
             android:src="@mipmap/ico_password" />
@@ -54,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_"
             android:hint="@string/login_password"
             android:inputType="textPassword"
             android:textColor="@color/text_3"
@@ -72,7 +73,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50px"
             android:paddingLeft="24px"
             android:paddingRight="24px"
             android:src="@mipmap/ico_yzm" />
@@ -83,6 +84,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_"
             android:hint="@string/login_code"
             android:textColor="@color/text_3"
             android:textColorHint="@color/text_9"
@@ -100,6 +102,7 @@
         android:layout_marginTop="50px"
         android:background="@drawable/denglu_selector"
         android:onClick="onLogin"
+        android:id="@+id/btn_login"
         android:text="@string/login"
         android:textColor="@color/white"
         android:textSize="19.0sp" />

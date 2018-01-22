@@ -19,7 +19,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50px"
             android:paddingLeft="24px"
             android:paddingRight="24px"
             android:src="@mipmap/ico_account" />
@@ -37,9 +37,12 @@
             android:textSize="17sp" />
 
         <Button
+            android:id="@+id/btn_getcode"
             android:layout_width="200px"
-            android:layout_height="match_parent"
+            android:layout_height="90px"
+            android:layout_marginRight="10px"
             android:background="@drawable/btn_code_bg_selector"
+            android:onClick="onGetCode"
             android:text="@string/getcode"
             android:textColor="@color/white"
             android:textSize="14sp" />
@@ -56,7 +59,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50px"
             android:paddingLeft="24px"
             android:paddingRight="24px"
             android:src="@mipmap/ico_yzm" />
@@ -67,6 +70,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
+            android:inputType="number"
             android:hint="@string/login_code"
             android:textColor="@color/text_3"
             android:textColorHint="@color/text_9"
@@ -82,7 +86,7 @@
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="50px"
             android:paddingLeft="24px"
             android:paddingRight="24px"
             android:src="@mipmap/ico_password" />
@@ -93,6 +97,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="@string/login_password"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_"
             android:inputType="textPassword"
             android:textColor="@color/text_3"
             android:textColorHint="@color/text_9"

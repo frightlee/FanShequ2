@@ -43,6 +43,9 @@
     <string name="Customerhotline">023-68872002</string>
     <string name="tongyongsz">通用设置</string>
     <string name="aboutour">关于我们</string>
+    <string name="notify_msg">消息提醒</string>
+    <string name="clearcache">清除缓存</string>
+    <string name="logout">退出登录</string>
 
     <!--登录注册-->
     <string name="login_user">请输入手机号</string>
@@ -208,8 +211,8 @@
 	            \n\t1.凡鸿通信郑重提醒用户注意本协议中免除凡鸿通信责任和限制用户权利的条款,请用户仔细阅读,自主考虑风险.并确定是否使用本《帆社区》软件产品.
 	            \n\t2.本协议的版权由凡鸿通信所有,重庆凡鸿通信技术有限公司保留法律范围的一切解释和修改权利.
     </string>
-	<string name="accept">接受</string>
-	<string name="decline">拒绝</string>
+    <string name="accept">接受</string>
+    <string name="decline">拒绝</string>
 
-	<!---->
+    <!---->
 </resources>
