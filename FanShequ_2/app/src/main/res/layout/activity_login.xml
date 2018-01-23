@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efefef"
+    android:background="@color/bg1"
     android:orientation="vertical"
     tools:context="com.fanhong.cn.login_pages.LoginActivity">
 
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:hint="@string/login_password"
             android:inputType="textPassword"
             android:textColor="@color/text_3"
@@ -115,7 +115,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="onResetPwd"
+            android:onClick="onForgetPwd"
             android:text="@string/forgot"
             android:textColor="@drawable/register_textcolor_selector"
             android:textSize="14sp" />

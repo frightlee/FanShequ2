@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
+    android:background="@color/bg1"
     android:orientation="vertical"
     tools:context="com.fanhong.cn.login_pages.RegisterActivity">
 
@@ -97,7 +97,7 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:hint="@string/login_password"
-            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:inputType="textPassword"
             android:textColor="@color/text_3"
             android:textColorHint="@color/text_9"

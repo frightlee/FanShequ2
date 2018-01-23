@@ -26,10 +26,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         tv_title.text = "用户登录"
-        img_back.setOnClickListener {
-            setResult(-1)
-            finish()
-        }
+        img_back.setOnClickListener { finish() }
 
         img_showCode.setOnClickListener {
             img_showCode.setImageBitmap(Code.instance.createBitmap())
@@ -67,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onSuccess(result: String) {
                 if (JsonSyncUtils.getJsonValue(result, "cw") == "0") {
                     ToastUtil.showToast("登陆成功！")
+                    Log.e("testLog",result)
                     val id = JsonSyncUtils.getJsonValue(result, "id")
                     val name = JsonSyncUtils.getJsonValue(result, "name")
                     val token = JsonSyncUtils.getJsonValue(result, "token")
@@ -75,10 +73,11 @@ class LoginActivity : AppCompatActivity() {
                     val editor = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
                     editor.putInt(App.PrefNames.USERID, id.toInt())
                     editor.putString(App.PrefNames.USERNAME, name)
+                    editor.putString(App.PrefNames.PASSOWRD, pwd)//保存未加密的密码
                     editor.putString(App.PrefNames.TOKEN, token)
                     editor.putString(App.PrefNames.NICKNAME, user)
                     editor.putString(App.PrefNames.HEADIMG, logo)
-                    editor.apply()
+                    editor.commit()
                     setResult(11)
                     finish()
                 } else {
@@ -113,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
         startActivityForResult(i, 21)
     }
 
-    fun onResetPwd(v: View) {
+    fun onForgetPwd(v: View) {
         val i = Intent(this, RegisterActivity::class.java)
         i.putExtra("type", "reset")
         startActivityForResult(i, 21)

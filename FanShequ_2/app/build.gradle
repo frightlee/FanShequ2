@@ -10,7 +10,7 @@ android {
         applicationId "com.fanhong.cn"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 8
+        versionCode 20
         multiDexEnabled true
         versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
