@@ -1,13 +1,17 @@
 package com.fanhong.cn
 
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.content.ContextCompat
@@ -25,8 +29,10 @@ import com.fanhong.cn.home_page.ServiceFragment
 import com.fanhong.cn.login_pages.LoginActivity
 import com.fanhong.cn.tools.AppCacheManager
 import com.fanhong.cn.tools.JsonSyncUtils
+import com.fanhong.cn.tools.ToastUtil
 import com.fanhong.cn.user_page.UserFragment
 import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.fragment_user.*
 import org.xutils.common.Callback
 import org.xutils.http.RequestParams
 import org.xutils.x
@@ -42,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
     private val fragments: MutableList<Fragment> = ArrayList()
 
     private var apkPath = ""
+    private var apkName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -145,7 +152,7 @@ class HomeActivity : AppCompatActivity() {
                     val targetIntroduce = JsonSyncUtils.getJsonValue(result, "gxsm")
                     val layout = LinearLayout(this@HomeActivity)
                     layout.orientation = LinearLayout.VERTICAL
-                    layout.setPadding(50,2,2,2)
+                    layout.setPadding(50, 2, 2, 2)
 //                    val scrollView = ScrollView(this@HomeActivity)
                     val tv1 = TextView(this@HomeActivity)
                     tv1.text = "更新说明："
@@ -160,6 +167,15 @@ class HomeActivity : AppCompatActivity() {
                     AlertDialog.Builder(this@HomeActivity)
                             .setTitle("发现新版本：v$targetName").setView(layout)
                             .setPositiveButton("立即更新", { _, _ ->
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    val checkCallPhonePermission = ContextCompat.checkSelfPermission(this@HomeActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                                    if (checkCallPhonePermission != PackageManager.PERMISSION_GRANTED) {
+                                        apkName = targetName
+                                        ActivityCompat.requestPermissions(this@HomeActivity, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                                                11)
+                                        return@setPositiveButton
+                                    }
+                                }
                                 startUpdating(targetName)
                             })
                             .setNegativeButton("暂不更新", { _, _ ->
@@ -187,13 +203,12 @@ class HomeActivity : AppCompatActivity() {
     private fun startUpdating(targetName: String) {
         val manager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notifycation: Notification = Notification()
-        val intent=Intent(Intent.ACTION_VIEW)
+        val intent = Intent(Intent.ACTION_VIEW)
         notifycation.icon = R.mipmap.ic_launcher
         notifycation.tickerText = "更新通知"
         notifycation.contentView = RemoteViews(this@HomeActivity.packageName, R.layout.softupdate_progress)
 
         var p = 0
-
         val param = RequestParams(App.APP_DOWNLOAD)
         param.saveFilePath = getApkPath(targetName)
         x.http().get(param, object : Callback.ProgressCallback<File> {
@@ -210,7 +225,7 @@ class HomeActivity : AppCompatActivity() {
                 if (isDownloading) {
                     val progress = AppCacheManager.getFormatSize(current.toDouble())
                     val max = AppCacheManager.getFormatSize(total.toDouble())
-                    val percent = (current*100 / total).toInt()
+                    val percent = (current * 100 / total).toInt()
                     Log.e("TestLog", "$percent%($progress/$max)")
                     if (percent > p) {
                         notifycation.contentView.setTextViewText(R.id.content_view_text1, progress + "/$max")
@@ -233,6 +248,7 @@ class HomeActivity : AppCompatActivity() {
             }
 
             override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                Log.e("TestLog", "onError" + ex.toString())
             }
 
             override fun onFinished() {
@@ -249,6 +265,15 @@ class HomeActivity : AppCompatActivity() {
         apkPath = basePath + "/FanShequ/FanShequ$code.apk"
         Log.e("TestLog", apkPath)
         return apkPath
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 11)
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startUpdating(apkName)
+            } else
+                ToastUtil.showToast("需要文件读写权限！")
     }
 
     /**
