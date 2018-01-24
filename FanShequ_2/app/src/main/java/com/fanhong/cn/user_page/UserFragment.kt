@@ -49,10 +49,12 @@ class UserFragment : Fragment() {
             R.id.account_setting -> {//账号设置
                 if (isLogged()) {
                     val intent = Intent(activity, AccountSetsActivity::class.java)
-                    startActivityForResult(intent, 11)
+                    startActivity(intent)
                 }else ToastUtil.showToast("请登录！")
             }
             R.id.news_notice -> {//消息通知
+                    val intent = Intent(activity, MessagesActivity::class.java)
+                    startActivity(intent)
             }
             R.id.my_order -> {//我的订单
                 if (isLogged()) {
@@ -75,7 +77,7 @@ class UserFragment : Fragment() {
                 callDialog(phoneNumber)
             }
             R.id.general_setup -> {//通用设置
-                startActivityForResult(Intent(activity, BasicSettingsActivity::class.java), 12)
+                startActivity(Intent(activity, BasicSettingsActivity::class.java))
             }
             R.id.about_us -> {//关于我们
                 startActivity(Intent(activity, AboutActivity::class.java))
@@ -86,14 +88,6 @@ class UserFragment : Fragment() {
     private fun isLogged(): Boolean  {
         val pref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         return pref.getInt(App.PrefNames.USERID, -1) != -1
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != Activity.RESULT_CANCELED)
-            when (requestCode) {
-                11, 12 -> refreshUser()
-            }
     }
 
     private fun callDialog(phoneNumber: String) {

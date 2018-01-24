@@ -35,8 +35,13 @@ class AccountSetsActivity : AppCompatActivity() {
         tv_phone.text = number
     }
 
-    fun onHeadImg(v: View) {}
-    fun onNickName(v: View) {}
+    fun onHeadImg(v: View) {
+        
+    }
+    fun onNickName(v: View) {
+        startActivity(Intent(this, NickSetActivity::class.java))
+    }
+
     fun onAddress(v: View) {}
     fun onResetPwd(v: View) {
         startActivity(Intent(this, ResetPwdActivity::class.java))

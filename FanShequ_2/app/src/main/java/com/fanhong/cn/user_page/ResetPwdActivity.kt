@@ -54,24 +54,27 @@ class ResetPwdActivity : AppCompatActivity() {
             x.http().post(param, object : Callback.CommonCallback<String> {
                 override fun onSuccess(result: String) {
                     val cw = JsonSyncUtils.getJsonValue(result, "cw")
-                    if ("0" == cw) {
-                        ToastUtil.showToast("修改成功！请重新登录")
+                    when (cw) {
+                        "0" -> {
+                            ToastUtil.showToast("修改成功！请重新登录")
 
-                        val editor = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
-                        editor.putInt(App.PrefNames.USERID, -1)
-                        editor.putString(App.PrefNames.USERNAME, null)
-                        editor.putString(App.PrefNames.TOKEN, null)
-                        editor.putString(App.PrefNames.NICKNAME, null)
-                        editor.putString(App.PrefNames.HEADIMG, null)
-                        editor.commit()
+                            val editor = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
+                            editor.putInt(App.PrefNames.USERID, -1)
+                            editor.putString(App.PrefNames.USERNAME, null)
+                            editor.putString(App.PrefNames.TOKEN, null)
+                            editor.putString(App.PrefNames.NICKNAME, null)
+                            editor.putString(App.PrefNames.HEADIMG, null)
+                            editor.commit()
 
-                        val intent = Intent(this@ResetPwdActivity, HomeActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)
-                        val intent1 = Intent(applicationContext, LoginActivity::class.java)
-                        startActivityForResult(intent1, HomeActivity.ACTION_LOGIN)
-                    } else if ("1" == cw) ToastUtil.showToast("用户未找到！")
-                    else ToastUtil.showToast("系统错误！")
+                            val intent = Intent(this@ResetPwdActivity, HomeActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                            val intent1 = Intent(applicationContext, LoginActivity::class.java)
+                            startActivityForResult(intent1, HomeActivity.ACTION_LOGIN)
+                        }
+                        "1" -> ToastUtil.showToast("用户未找到！")
+                        else -> ToastUtil.showToast("系统错误！")
+                    }
                 }
 
                 override fun onFinished() {
