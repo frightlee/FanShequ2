@@ -1,4 +1,4 @@
-package com.fanhong.cn.activities
+package com.fanhong.cn.home_page
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
