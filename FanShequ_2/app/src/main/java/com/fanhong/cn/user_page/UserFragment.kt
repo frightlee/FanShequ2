@@ -2,11 +2,11 @@ package com.fanhong.cn.user_page
 
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -14,12 +14,10 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.fanhong.cn.App
-import com.fanhong.cn.HomeActivity
 import com.fanhong.cn.R
 import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.fragment_user.*
@@ -39,17 +37,30 @@ class UserFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         addClickListeners()
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun onResume() {
+        super.onResume()
         refreshUser()
     }
 
     private val listener = View.OnClickListener { v ->
         when (v.id) {
             R.id.account_setting -> {//账号设置
+                if (isLogged()) {
+                    val intent = Intent(activity, AccountSetsActivity::class.java)
+                    startActivity(intent)
+                }else ToastUtil.showToast("请登录！")
             }
             R.id.news_notice -> {//消息通知
+                    val intent = Intent(activity, MessagesActivity::class.java)
+                    startActivity(intent)
             }
             R.id.my_order -> {//我的订单
+                if (isLogged()) {
+                    val intent = Intent(activity, MyOrdersActivity::class.java)
+                    startActivity(intent)
+                }else ToastUtil.showToast("请登录！")
             }
             R.id.customer_hotline -> {//客服热线
                 val phoneNumber = tv_hotline.text.toString().trim()
@@ -66,20 +77,19 @@ class UserFragment : Fragment() {
                 callDialog(phoneNumber)
             }
             R.id.general_setup -> {//通用设置
-                startActivityForResult(Intent(activity,BasicSettingsActivity::class.java),12)
+                startActivity(Intent(activity, BasicSettingsActivity::class.java))
             }
             R.id.about_us -> {//关于我们
+                startActivity(Intent(activity, AboutActivity::class.java))
             }
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode!=-1)
-            when(requestCode){
-                12->refreshUser()
-            }
+    private fun isLogged(): Boolean  {
+        val pref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        return pref.getInt(App.PrefNames.USERID, -1) != -1
     }
+
     private fun callDialog(phoneNumber: String) {
         AlertDialog.Builder(activity).setTitle("拨打电话")
                 .setMessage(phoneNumber + "\n是否立即拨打？")

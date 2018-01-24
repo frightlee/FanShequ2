@@ -46,6 +46,18 @@
     <string name="notify_msg">消息提醒</string>
     <string name="clearcache">清除缓存</string>
     <string name="logout">退出登录</string>
+    <string name="copyright">Copyright ©2015-2018\n重庆凡鸿通信技术有限公司</string>
+    <string name="head">头像</string>
+    <string name="nick">昵称</string>
+    <string name="account">账号</string>
+    <string name="address">收货地址</string>
+    <string name="resetPwd">修改密码</string>
+    <string name="currentPwd">初始密码：</string>
+    <string name="newPwd">新设密码：</string>
+    <string name="confirmPwd">确认密码：</string>
+    <string name="confirmReset">确认修改</string>
+    <string name="nickHint">请输入昵称</string>
+    <string name="save">保存</string>
 
     <!--登录注册-->
     <string name="login_user">请输入手机号</string>

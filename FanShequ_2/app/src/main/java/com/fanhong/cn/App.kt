@@ -24,10 +24,11 @@ class App : Application() {
     object PrefNames {
         val UPDATEIGNORE = "checkDate"//忽略更新日期
         val FIRST_START = "first_start"  //首次登录检测
-        val USERNAME = "username"  //用户名
-        val NICKNAME = "nickname"//用户昵称
+        val USERNAME = "Name"  //用户名
+        val PASSOWRD = "Password"  //密码（加密前）
+        val NICKNAME = "Nick"//用户昵称
         val USERID = "userId"  //用户Id
-        val HEADIMG = "headImg"//用户头像地址
+        val HEADIMG = "Logo"//用户头像地址
         val TOKEN = "token"//融云Token
         val ISNOTIFY = "notifyMsg"//是否开启通知
     }

@@ -3,7 +3,6 @@ package com.fanhong.cn
 import android.Manifest
 import android.app.Notification
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,8 +19,10 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RemoteViews
+import android.widget.TextView
 import com.fanhong.cn.door_page.DoorFragment
 import com.fanhong.cn.home_page.CommunityFragment
 import com.fanhong.cn.home_page.HomeFragment
@@ -32,7 +33,6 @@ import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.tools.ToastUtil
 import com.fanhong.cn.user_page.UserFragment
 import kotlinx.android.synthetic.main.activity_home.*
-import kotlinx.android.synthetic.main.fragment_user.*
 import org.xutils.common.Callback
 import org.xutils.http.RequestParams
 import org.xutils.x
@@ -43,7 +43,9 @@ import java.util.*
 
 class HomeActivity : AppCompatActivity() {
 
-    private val ACTION_LOGIN: Int = 11
+    companion object {
+        val ACTION_LOGIN: Int = 21
+    }
 
     private val fragments: MutableList<Fragment> = ArrayList()
 
@@ -58,6 +60,7 @@ class HomeActivity : AppCompatActivity() {
         val today = SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis())
         if (today != getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.UPDATEIGNORE, ""))
             checkUpdate()
+
     }
 
     private fun initViews() {
@@ -286,11 +289,10 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != -1)
-            when (requestCode) {
-                ACTION_LOGIN -> {
-                    (fragments[4] as UserFragment).refreshUser()
-                }
+        when (requestCode) {
+            ACTION_LOGIN -> {
+//                (fragments[4] as UserFragment).refreshUser()
             }
+        }
     }
 }

@@ -26,7 +26,7 @@ class BasicSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_settings)
 
-        tv_title.text = "通用设置"
+        tv_title.text = getString(R.string.tongyongsz)
         img_back.setOnClickListener {
             setResult(-1)
             finish()
