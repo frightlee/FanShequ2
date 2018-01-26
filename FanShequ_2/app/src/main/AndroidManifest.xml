@@ -48,6 +48,7 @@
         <activity android:name=".user_page.MyOrdersActivity" />
         <activity android:name=".user_page.ResetPwdActivity" />
         <activity android:name=".user_page.NickSetActivity" />
+        <activity android:name=".home_page.ChooseCellActivity"/>
         <activity android:name=".user_page.MessagesActivity"></activity>
         <!-- android6.0拍照权限调取 -->
         <provider
