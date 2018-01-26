@@ -1,12 +1,10 @@
 package com.fanhong.cn.user_page
 
 import android.Manifest
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.net.Uri.fromFile
 import android.os.Build
@@ -15,6 +13,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
@@ -34,11 +33,13 @@ import java.io.File
 import java.io.IOException
 
 class AccountSetsActivity : AppCompatActivity() {
-    private val REQUEST_TAKE_PHOTO = 11
-    private val REQUEST_CHOOSE_PIC = 12
-    private val TAKE_PHOTO = 21
-    private val CHOOSE_PIC = 22
-    private val CUT_PICTURE = 23
+    companion object {
+        private val REQUEST_TAKE_PHOTO = 11
+        private val REQUEST_CHOOSE_PIC = 12
+        private val TAKE_PHOTO = 21
+        private val CHOOSE_PIC = 22
+        private val CUT_PICTURE = 23
+    }
 
     private var file: File? = null
     private var cropFile: File? = null
@@ -193,19 +194,29 @@ class AccountSetsActivity : AppCompatActivity() {
             // 取得SDCard图片路径做显示
             val photo = extras.getParcelable<Bitmap>("data")
 //            val drawable = BitmapDrawable(null, photo)
-            img_head.setImageBitmap(photo)
+//            img_head.setImageBitmap(photo)
             val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
             val username = pref.getString(App.PrefNames.USERNAME, "")
-            val file = FileUtil.compressImage(photo, Environment.getExternalStorageDirectory().toString() + "/Fanshequ/$username.jpg")
+            val file: File = FileUtil.compressImage(photo, Environment.getExternalStorageDirectory().toString() + "/Fanshequ/$username.jpg")
 
+            Log.e("testLog", "file.length=${file.length()}")
             val param = RequestParams(App.HEAD_UPLOAD)
             param.addBodyParameter("touxiang", file)
+            param.addBodyParameter("username", username)
+            param.isMultipart = true//以表单形式提交，否则后台接收不到
             val cancelAble = x.http().post(param, object : Callback.CommonCallback<String> {
                 override fun onFinished() {
+                    val headUrl = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.HEADIMG, "")
+                    val option = ImageOptions.Builder().setCircular(true)
+                            .setLoadingDrawableId(R.mipmap.ico_tx)
+                            .setFailureDrawableId(R.mipmap.ico_tx)
+                            .setUseMemCache(true).build()
+                    x.image().bind(img_head, headUrl, option)
                 }
 
                 override fun onSuccess(result: String) {
                     Log.e("testLog", result)
+                    AlertDialog.Builder(this@AccountSetsActivity).setMessage(result).show()
                 }
 
                 override fun onCancelled(cex: Callback.CancelledException?) {
