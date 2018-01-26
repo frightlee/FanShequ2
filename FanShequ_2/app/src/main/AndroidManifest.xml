@@ -48,7 +48,8 @@
         <activity android:name=".user_page.MyOrdersActivity" />
         <activity android:name=".user_page.ResetPwdActivity" />
         <activity android:name=".user_page.NickSetActivity" />
-        <activity android:name=".user_page.MessagesActivity"></activity>
+        <activity android:name=".user_page.MessagesActivity"/>
+        <activity android:name=".home_page.ChooseCellActivity"/>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.fanhong.cn.home_page
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -18,9 +19,14 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_home, container, false)
     }
+
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        initViews()
+    }
     private fun initViews(){
-        get_location.setOnClickListener(View.OnClickListener { v:View->
-//            startActivityForResult(Intent(this@HomeFragment,))
+        get_location.setOnClickListener({
+            startActivityForResult(Intent(activity,ChooseCellActivity::class.java),110)
         })
     }
+
 }
