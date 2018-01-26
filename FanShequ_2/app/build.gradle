@@ -14,6 +14,18 @@ android {
         multiDexEnabled true
         versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "b6db9dab4688a720563ca002", //JPush上注册的包名对应的appkey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+        ]
     }
     buildTypes {
         release {
@@ -37,4 +49,6 @@ dependencies {
     compile 'com.zhy:autolayout:1.4.5'
     //xutils 3
     compile 'org.xutils:xutils:3.5.0'
+    compile 'cn.jiguang.sdk:jpush:3.1.1'
+    compile 'cn.jiguang.sdk:jcore:1.1.9'
 }

@@ -14,6 +14,7 @@ class App : Application() {
         val CMD = "http://m.wuyebest.com/index.php/App/index"//数据接口统一访问路径
         val UPDATE_CHECK = "http://m.wuyebest.com/index.php/App/index/appnumber"//更新检查访问路径
         val APP_DOWNLOAD = "http://m.wuyebest.com/public/apk/FanShequ.apk"//app下载路径
+        val HEAD_UPLOAD = "http://m.wuyebest.com/index.php/App/index/upapp"//头像上传路径
 
         var lastCodeMsgTime = 0L
     }
