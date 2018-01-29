@@ -48,8 +48,8 @@
         <activity android:name=".user_page.MyOrdersActivity" />
         <activity android:name=".user_page.ResetPwdActivity" />
         <activity android:name=".user_page.NickSetActivity" />
-        <activity android:name=".home_page.ChooseCellActivity" />
-        <activity android:name=".user_page.MessagesActivity" />
+        <activity android:name=".home_page.ChooseCellActivity"/>
+        <activity android:name=".user_page.MessagesActivity"></activity>
         <!-- android6.0拍照权限调取 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -67,9 +67,20 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
-        <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
-        <activity android:name=".user_page.shippingaddress.AddAddressActivity"></activity>
+        <!-- My JPush Receiver-->
+        <receiver
+            android:name=".receiver.MyJPushReciver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.RECEIVE_MESSAGE" />
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!-- Required  用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!-- Required  用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!-- Required  用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!-- Required  用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /> <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="com.adplayer.fanhong.adplayer" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
