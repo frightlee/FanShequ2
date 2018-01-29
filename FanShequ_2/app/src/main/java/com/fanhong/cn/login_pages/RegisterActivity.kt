@@ -55,17 +55,17 @@ class RegisterActivity : AppCompatActivity() {
     private fun resetPwd() {
         val name = edt_username.text.toString().trim()
         if (!StringUtils.validPhoneNum("0", name)) {
-            ToastUtil.showToast("请输入正确的电话号码！")
+            ToastUtil.showToastL("请输入正确的电话号码！")
             return
         }
         val code = edt_code.text.toString().trim()
         if (TextUtils.isEmpty(code)) {
-            ToastUtil.showToast("请输入验证码！")
+            ToastUtil.showToastL("请输入验证码！")
             return
         }
         val pwd = edt_password.text.toString().trim()
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtil.showToast("请输入密码")
+            ToastUtil.showToastL("请输入密码")
             return
         }
         val password=MD5Util.getEncryptString(pwd)
@@ -78,16 +78,16 @@ class RegisterActivity : AppCompatActivity() {
             override fun onSuccess(result: String) {
                 when (JsonSyncUtils.getJsonValue(result, "cw")) {
                     "0" -> {
-                        ToastUtil.showToast("修改成功！")
+                        ToastUtil.showToastL("修改成功！")
                         val i = Intent()
                         i.putExtra("username", name)
                         i.putExtra("password", pwd)
                         setResult(21, i)
                         finish()
                     }
-                    "1" -> ToastUtil.showToast("验证码错误！请重试")
-                    "2" -> ToastUtil.showToast("系统错误！请稍后重试")
-                    "3" -> ToastUtil.showToast("用户不存在！")
+                    "1" -> ToastUtil.showToastL("验证码错误！请重试")
+                    "2" -> ToastUtil.showToastL("系统错误！请稍后重试")
+                    "3" -> ToastUtil.showToastL("用户不存在！")
                 }
             }
 
@@ -105,17 +105,17 @@ class RegisterActivity : AppCompatActivity() {
     private fun register() {
         val name = edt_username.text.toString().trim()
         if (!StringUtils.validPhoneNum("0", name)) {
-            ToastUtil.showToast("请输入正确的电话号码！")
+            ToastUtil.showToastL("请输入正确的电话号码！")
             return
         }
         val code = edt_code.text.toString().trim()
         if (TextUtils.isEmpty(code)) {
-            ToastUtil.showToast("请输入验证码！")
+            ToastUtil.showToastL("请输入验证码！")
             return
         }
         val pwd = edt_password.text.toString().trim()
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtil.showToast("请输入密码")
+            ToastUtil.showToastL("请输入密码")
             return
         }
         val password=MD5Util.getEncryptString(pwd)
@@ -128,16 +128,16 @@ class RegisterActivity : AppCompatActivity() {
             override fun onSuccess(result: String) {
                 when (JsonSyncUtils.getJsonValue(result, "cw")) {
                     "0" -> {
-                        ToastUtil.showToast("注册成功！")
+                        ToastUtil.showToastL("注册成功！")
                         val i = Intent()
                         i.putExtra("username", name)
                         i.putExtra("password", pwd)
                         setResult(21, i)
                         finish()
                     }
-                    "1" -> ToastUtil.showToast("验证码错误！")
-                    "2" -> ToastUtil.showToast("系统错误！请稍后重试")
-                    "3" -> ToastUtil.showToast("用户已注册！")
+                    "1" -> ToastUtil.showToastL("验证码错误！")
+                    "2" -> ToastUtil.showToastL("系统错误！请稍后重试")
+                    "3" -> ToastUtil.showToastL("用户已注册！")
                 }
             }
 
@@ -187,11 +187,11 @@ class RegisterActivity : AppCompatActivity() {
 
                 override fun onSuccess(result: String?) {
                     if (JsonSyncUtils.getJsonValue(result ?: "", "cw") == "0")
-                        ToastUtil.showToast("短信验证码发送成功")
+                        ToastUtil.showToastL("短信验证码发送成功")
                 }
             })
         } else {
-            ToastUtil.showToast("请输入正确的电话号码！")
+            ToastUtil.showToastL("请输入正确的电话号码！")
         }
     }
 

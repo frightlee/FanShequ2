@@ -1,6 +1,7 @@
 package com.fanhong.cn
 
 import android.app.Application
+import android.content.SharedPreferences
 
 import org.xutils.x
 
@@ -17,6 +18,7 @@ class App : Application() {
         val HEAD_UPLOAD = "http://m.wuyebest.com/index.php/App/index/upapp"//头像上传路径
 
         var lastCodeMsgTime = 0L
+
     }
 
     /**

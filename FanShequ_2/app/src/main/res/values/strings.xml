@@ -10,6 +10,7 @@
     <string name="tab_mine">我的</string>
 
 	<string name="choosegarden">选择小区</string>
+	<string name="chooselou">选择楼栋</string>
     <string name="shequgonggao">社区公告</string>
     <string name="wuyezhixing">物业之星</string>
     <string name="zhaoshangdaili">招商代理</string>
@@ -59,6 +60,14 @@
     <string name="confirmReset">确认修改</string>
     <string name="nickHint">请输入昵称</string>
     <string name="save">保存</string>
+	<string name="addaddress">添加地址</string>
+	<string name="control">管理</string>
+	<string name="finish">完成</string>
+	<string name="delete">删除</string>
+	<string name="editor">编辑</string>
+	<string name="whetherset">是否设置为默认地址</string>
+	<string name="delete_address">删除地址</string>
+	<string name="if_sure_delete">是否确认删除？</string>
 
     <!--登录注册-->
     <string name="login_user">请输入手机号</string>

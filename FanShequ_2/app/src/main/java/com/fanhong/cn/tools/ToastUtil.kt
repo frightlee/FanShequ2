@@ -7,7 +7,10 @@ import org.xutils.x
  * Created by Administrator on 2018/1/16.
  */
 object ToastUtil{
-    fun showToast(s:String){
+    fun showToastL(s:String){
         Toast.makeText(x.app(),s,Toast.LENGTH_LONG).show()
+    }
+    fun showToastS(s:String){
+        Toast.makeText(x.app(),s,Toast.LENGTH_SHORT).show()
     }
 }

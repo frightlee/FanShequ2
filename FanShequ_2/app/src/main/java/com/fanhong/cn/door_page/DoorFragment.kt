@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 
 import com.fanhong.cn.R
 import com.fanhong.cn.tools.ToastUtil
@@ -36,13 +35,13 @@ class DoorFragment : Fragment() {
      * 添加钥匙
      */
     private fun addKeys() {
-        ToastUtil.showToast("refresh clicked")
+        ToastUtil.showToastL("refresh clicked")
     }
 
     /**
      * 刷新钥匙
      */
     private fun refreshKeys() {
-        ToastUtil.showToast("add clicked")
+        ToastUtil.showToastL("add clicked")
     }
 }

@@ -14,9 +14,12 @@
     <color name="bg1">#efefef</color>
     <color name="bg2">#f5f5f5</color>
 
+    <color name="devider_color">#cccccc</color>
+
     <color name="textnormal">#5B5B5B</color>
     <color name="text_1">#111111</color>
     <color name="text_3">#333333</color>
     <color name="text_6">#666666</color>
     <color name="text_9">#999999</color>
+    <color name="alpha_33">#33000000</color>
 </resources>

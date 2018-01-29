@@ -23,6 +23,7 @@ import com.fanhong.cn.R
 import com.fanhong.cn.myviews.PhotoSelectWindow
 import com.fanhong.cn.tools.FileUtil
 import com.fanhong.cn.tools.GetImagePath
+import com.fanhong.cn.user_page.shippingaddress.MyAddressActivity
 import kotlinx.android.synthetic.main.activity_account_sets.*
 import kotlinx.android.synthetic.main.activity_top.*
 import org.xutils.common.Callback
@@ -106,7 +107,8 @@ class AccountSetsActivity : AppCompatActivity() {
         startActivity(Intent(this, NickSetActivity::class.java))
     }
 
-    fun onAddress(v: View) {}
+    fun onAddress(v: View) {
+        startActivity(Intent(this@AccountSetsActivity, MyAddressActivity::class.java))}
     fun onResetPwd(v: View) {
         startActivity(Intent(this, ResetPwdActivity::class.java))
     }
