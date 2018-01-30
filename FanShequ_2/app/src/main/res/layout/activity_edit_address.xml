@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.autolayout.AutoLinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
     <include layout="@layout/activity_top"/>
     <com.zhy.autolayout.AutoLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20px"
+        android:orientation="horizontal"
         android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="horizontal">
-
+        android:focusableInTouchMode="true">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:focusableInTouchMode="true"
-            android:focusable="true"
             android:text="姓名："
-            android:textSize="30px" />
+            android:textSize="30px"
+            android:layout_gravity="bottom" />
 
         <EditText
-            android:id="@+id/input_name_edt"
+            android:id="@+id/change_name_edt"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10px"
-            android:layout_marginRight="30px"
-            android:singleLine="true"
             android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="30px"
+            android:layout_marginLeft="10px"
+            android:singleLine="true"
+            android:textSize="30px"
             android:background="@mipmap/bg_underline"
-            android:gravity="bottom"
-            android:textSize="30px" />
+            android:gravity="bottom"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
     <com.zhy.autolayout.AutoLinearLayout
@@ -51,14 +48,13 @@
             android:textSize="30px" />
 
         <EditText
-            android:id="@+id/input_phone_edt"
+            android:id="@+id/change_phone_edt"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10px"
             android:layout_marginRight="30px"
             android:layout_weight="1"
             android:singleLine="true"
-            android:maxLength="11"
             android:background="@mipmap/bg_underline"
             android:gravity="bottom"
             android:inputType="phone"
@@ -82,7 +78,7 @@
             android:textSize="30px" />
 
         <TextView
-            android:id="@+id/address_choosecell"
+            android:id="@+id/change_address_choosecell"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
@@ -95,11 +91,11 @@
             android:textSize="30px" />
 
         <TextView
-            android:id="@+id/address_chooselou"
+            android:id="@+id/change_address_chooselou"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30px"
-            android:layout_toRightOf="@id/address_choosecell"
+            android:layout_toRightOf="@id/change_address_choosecell"
             android:background="@drawable/biankuang_shape"
             android:drawableRight="@mipmap/lion_xiala"
             android:padding="8px"
@@ -109,11 +105,11 @@
             android:textSize="30px" />
 
         <EditText
-            android:id="@+id/input_address_edt"
+            android:id="@+id/change_address_edt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_shouhuo"
-            android:layout_alignLeft="@id/address_choosecell"
+            android:layout_alignLeft="@id/change_address_choosecell"
             android:layout_marginTop="10px"
             android:layout_marginRight="30px"
             android:background="@drawable/biankuang_shape"
@@ -124,13 +120,13 @@
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <CheckBox
-        android:id="@+id/whether_set_default"
+        android:id="@+id/whether_default"
+        style="@style/my_checkbox_selector"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20px"
         android:layout_marginTop="20px"
         android:padding="15px"
-        style="@style/my_checkbox_selector"
         android:text="@string/whetherset"
         android:textColor="#424242"
         android:textSize="30px" />

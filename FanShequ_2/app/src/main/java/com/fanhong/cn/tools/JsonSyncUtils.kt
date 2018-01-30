@@ -42,7 +42,7 @@ object JsonSyncUtils {
      * @return
      */
     @Synchronized
-    fun getStringList(data: String, key: String): List<String> {
+    fun getStringList(data: String, key: String): MutableList<String> {
         val list:MutableList<String> = ArrayList()
         try {
             val jsonArray = JSONArray(data)

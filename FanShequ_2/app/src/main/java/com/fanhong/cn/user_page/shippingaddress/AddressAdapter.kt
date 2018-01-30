@@ -15,9 +15,19 @@ import org.xutils.x
 /**
  * Created by Administrator on 2018/1/26.
  */
-class AddressAdapter(val context: Context, val list: MutableList<MyAddressActivity.AddressModel>) : BaseAdapter() {
+class AddressAdapter(val context: Context,
+                     private val list: MutableList<MyAddressActivity.AddressModel>) : BaseAdapter() {
 
     var controlable: Boolean = false
+    var mConclick: ControlClick? = null
+
+    interface ControlClick {
+        fun delAddress(adrid: String,position: Int)
+        fun edtAddress(model:MyAddressActivity.AddressModel)
+    }
+    fun setConclick(conclick:ControlClick){
+        mConclick = conclick
+    }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var holder: ViewHolder
@@ -30,7 +40,7 @@ class AddressAdapter(val context: Context, val list: MutableList<MyAddressActivi
             view = convertView
             holder = view.tag as ViewHolder
         }
-        var model = list[position]
+        val model = list[position]
         holder.tvName!!.text = model.name
         holder.tvPhone!!.text = model.phone
         holder.tvAddress!!.text = model.address
@@ -47,6 +57,12 @@ class AddressAdapter(val context: Context, val list: MutableList<MyAddressActivi
                 holder.tvDelete!!.visibility = View.GONE
                 holder.tvEdit!!.visibility = View.GONE
             }
+        }
+        holder.tvDelete!!.setOnClickListener{
+            mConclick!!.delAddress(model.adrid!!,position)
+        }
+        holder.tvEdit!!.setOnClickListener{
+            mConclick!!.edtAddress(model)
         }
         return view
     }

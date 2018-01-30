@@ -26,7 +26,8 @@ import org.xutils.x
  * @author xuqiang
  * @create time 2018-1-29
 </T></T> */
-class SpinerPopWindow<T>(context: Context, private val list: List<T>, clickListener: OnItemClickListener, per: String) : PopupWindow(context) {
+class SpinerPopWindow<T>(context: Context, val list: List<T>,
+                         clickListener: OnItemClickListener, per: String) : PopupWindow(context) {
     private var inflater: LayoutInflater? = null
     private var mListView: ListView? = null
     private var mAdapter: MyAdapter? = null
