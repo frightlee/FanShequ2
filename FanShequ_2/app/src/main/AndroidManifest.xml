@@ -56,7 +56,9 @@
 
         <activity android:name=".user_page.shippingaddress.AddAddressActivity" />
         <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
-        <activity android:name=".user_page.shippingaddress.EditAddressActivity"/>
+
+        <activity android:name=".user_page.shippingaddress.EditAddressActivity" />
+        <activity android:name=".home_page.BannerInActivity"></activity>
 
         <!-- android6.0拍照权限调取 -->
         <provider
@@ -89,6 +91,7 @@
                 <category android:name="com.adplayer.fanhong.adplayer" />
             </intent-filter>
         </receiver>
+
 
     </application>
 
