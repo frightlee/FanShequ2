@@ -89,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                ToastUtil.showToastL("访问服务器失败，请检查网络连接")
                 failCount++
                 if (failCount == 4) {
                     layout_code.visibility = View.VISIBLE

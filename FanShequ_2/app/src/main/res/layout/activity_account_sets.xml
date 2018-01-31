@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg1"
-    android:id="@+id/layout_main"
     android:orientation="vertical"
     tools:context="com.fanhong.cn.user_page.AccountSetsActivity">
 
@@ -67,8 +67,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/nick"
+            android:textColor="@color/text_6"
+            android:textSize="30px" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="0dp"
+            android:layout_height="86px"
+            android:layout_marginRight="10px"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            android:scaleType="centerInside"
             android:textColor="@color/text_6"
             android:textSize="30px" />
 
@@ -103,7 +113,7 @@
 
         <TextView
             android:id="@+id/tv_phone"
-            android:layout_width="100px"
+            android:layout_width="0dp"
             android:layout_height="86px"
             android:layout_marginRight="10px"
             android:layout_weight="1"

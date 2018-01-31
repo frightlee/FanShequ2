@@ -1,6 +1,7 @@
 package com.fanhong.cn.user_page
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -13,9 +14,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import com.fanhong.cn.App
@@ -23,6 +22,7 @@ import com.fanhong.cn.R
 import com.fanhong.cn.myviews.PhotoSelectWindow
 import com.fanhong.cn.tools.FileUtil
 import com.fanhong.cn.tools.GetImagePath
+import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.user_page.shippingaddress.MyAddressActivity
 import kotlinx.android.synthetic.main.activity_account_sets.*
 import kotlinx.android.synthetic.main.activity_top.*
@@ -67,12 +67,14 @@ class AccountSetsActivity : AppCompatActivity() {
         val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         val headUrl = pref.getString(App.PrefNames.HEADIMG, "")
         val number = pref.getString(App.PrefNames.USERNAME, "")
+        val nick = pref.getString(App.PrefNames.NICKNAME, "")
         val option = ImageOptions.Builder().setCircular(true)
                 .setLoadingDrawableId(R.mipmap.ico_tx)
                 .setFailureDrawableId(R.mipmap.ico_tx)
                 .setUseMemCache(true).build()
         x.image().bind(img_head, headUrl, option)
         tv_phone.text = number
+        tv_nick.text = nick
     }
 
     fun onHeadImg(v: View) {
@@ -108,7 +110,9 @@ class AccountSetsActivity : AppCompatActivity() {
     }
 
     fun onAddress(v: View) {
-        startActivity(Intent(this@AccountSetsActivity, MyAddressActivity::class.java))}
+        startActivity(Intent(this@AccountSetsActivity, MyAddressActivity::class.java))
+    }
+
     fun onResetPwd(v: View) {
         startActivity(Intent(this, ResetPwdActivity::class.java))
     }
@@ -199,12 +203,14 @@ class AccountSetsActivity : AppCompatActivity() {
 //            img_head.setImageBitmap(photo)
             val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
             val username = pref.getString(App.PrefNames.USERNAME, "")
+            val userId = pref.getString(App.PrefNames.USERID, "-1")
             val file: File = FileUtil.compressImage(photo, Environment.getExternalStorageDirectory().toString() + "/Fanshequ/$username.jpg")
 
-            Log.e("testLog", "file.length=${file.length()}")
+//            Log.e("testLog", "file.length=${file.length()}")
             val param = RequestParams(App.HEAD_UPLOAD)
             param.addBodyParameter("touxiang", file)
-            param.addBodyParameter("username", username)
+            param.addBodyParameter("tel", username)
+            param.addBodyParameter("uid", userId)
             param.isMultipart = true//以表单形式提交，否则后台接收不到
             val cancelAble = x.http().post(param, object : Callback.CommonCallback<String> {
                 override fun onFinished() {
@@ -216,9 +222,17 @@ class AccountSetsActivity : AppCompatActivity() {
                     x.image().bind(img_head, headUrl, option)
                 }
 
+                @SuppressLint("ApplySharedPref")
                 override fun onSuccess(result: String) {
-                    Log.e("testLog", result)
-                    AlertDialog.Builder(this@AccountSetsActivity).setMessage(result).show()
+                    val cw = JsonSyncUtils.getJsonValue(result, "cw")
+                    if (cw == "0") {
+                        val token = JsonSyncUtils.getJsonValue(result, "token")
+                        val headUrl = JsonSyncUtils.getJsonValue(result, "logo")
+                        val editor = pref.edit()
+                        editor.putString(App.PrefNames.TOKEN, token)
+                        editor.putString(App.PrefNames.HEADIMG, headUrl)
+                        editor.commit()
+                    }
                 }
 
                 override fun onCancelled(cex: Callback.CancelledException?) {
