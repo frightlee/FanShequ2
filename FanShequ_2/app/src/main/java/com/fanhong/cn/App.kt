@@ -25,6 +25,7 @@ class App : Application() {
      *全局缓存数据键集
      */
     object PrefNames {
+
         val UPDATEIGNORE = "checkDate"//忽略更新日期 String
         val FIRST_START = "first_start"  //首次登录检测 Boolean
         val USERNAME = "Name"  //用户名 String
@@ -34,6 +35,8 @@ class App : Application() {
         val HEADIMG = "Logo"//用户头像地址 String
         val TOKEN = "token"//融云Token String
         val ISNOTIFY = "notifyMsg"//是否开启通知 Boolean
+        val GARDENNAME = "gardenName" //小区名字
+        val GARDENID = "gardenId" //小区id
     }
 
     override fun onCreate() {
