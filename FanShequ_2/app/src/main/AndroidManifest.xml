@@ -51,7 +51,7 @@
         <activity android:name=".home_page.ChooseCellActivity" />
         <activity android:name=".user_page.shippingaddress.AddAddressActivity" />
         <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
-        <activity android:name=".user_page.shippingaddress.EditAddressActivity"/>
+        <activity android:name=".user_page.shippingaddress.EditAddressActivity" />
         <activity android:name=".user_page.MessagesActivity" />
         <!-- android6.0拍照权限调取 -->
         <provider
@@ -85,7 +85,8 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".user_page.shippingaddress.EditAddtrssActivity"></activity>
+        <activity android:name=".user_page.shippingaddress.EditAddtrssActivity" />
+        <activity android:name=".home_page.BannerInActivity"></activity>
     </application>
 
 </manifest>

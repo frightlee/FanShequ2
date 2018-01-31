@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -133,6 +134,16 @@ class HomeActivity : AppCompatActivity() {
         }
 
     }
+    fun setRadioButtonChecked(i:Int){
+        when(i){
+            0->tab_home.isChecked = true
+            1->tab_service.isChecked = true
+            2->tab_door.isChecked = true
+            3->tab_interaction.isChecked =true
+            4->tab_user.isChecked = true
+            else->{}
+        }
+    }
 
     private fun setFloatIconsVisible(o: Int) {
         val icons: Array<ImageView> = arrayOf(img_tab_home, img_tab_service, img_tab_door, img_tab_interaction, img_tab_user)
@@ -142,6 +153,23 @@ class HomeActivity : AppCompatActivity() {
             else
                 icons[i].visibility = View.GONE
         }
+    }
+    private var time1 = 0L
+    private var time2 = 0L
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            time1 = System.currentTimeMillis()
+            if (time1-time2 >2000){
+                ToastUtil.showToastL("再按一次退出程序")
+                time2 = time1
+            }else{
+                //各种链接的注销写在这里
+
+                finish()
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
     private fun checkUpdate() {
@@ -265,7 +293,7 @@ class HomeActivity : AppCompatActivity() {
         val file = File(basePath + "/FanShequ")
         if (!file.exists())
             file.mkdir()
-        apkPath = basePath + "/FanShequ/FanShequ$code.apk"
+        apkPath = "$basePath/FanShequ/FanShequ$code.apk"
         Log.e("TestLog", apkPath)
         return apkPath
     }
