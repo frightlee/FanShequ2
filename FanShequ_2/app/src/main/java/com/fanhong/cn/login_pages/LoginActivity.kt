@@ -63,8 +63,7 @@ class LoginActivity : AppCompatActivity() {
         x.http().post(param, object : Callback.CommonCallback<String> {
             override fun onSuccess(result: String) {
                 if (JsonSyncUtils.getJsonValue(result, "cw") == "0") {
-                    ToastUtil.showToast("登陆成功！")
-                    Log.e("testLog",result)
+                    ToastUtil.showToast("登录成功！")
                     val id = JsonSyncUtils.getJsonValue(result, "id")
                     val name = JsonSyncUtils.getJsonValue(result, "name")
                     val token = JsonSyncUtils.getJsonValue(result, "token")
@@ -90,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                ToastUtil.showToast("访问服务器失败，请检查网络连接")
                 failCount++
                 if (failCount == 4) {
                     layout_code.visibility = View.VISIBLE

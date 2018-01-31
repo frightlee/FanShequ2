@@ -23,32 +23,33 @@ class NickSetActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_nick_set)
-        tv_title.text="修改昵称"
+        tv_title.text = "修改昵称"
         img_back.setOnClickListener { finish() }
     }
 
-    fun onSaveNick(v: View){
-        val nick=edt_nickname.text.toString().trim()
-        if (TextUtils.isEmpty(nick)){
+    fun onSaveNick(v: View) {
+        val nick = edt_nickname.text.toString().trim()
+        if (TextUtils.isEmpty(nick)) {
             ToastUtil.showToast("输入不能为空！")
             return
         }
-        val pref=getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val username=pref.getString(App.PrefNames.USERNAME,"")
-        val param=RequestParams(App.CMD)
-        param.addBodyParameter("cmd","11")
-        param.addBodyParameter("name",username)
-        param.addBodyParameter("user",nick)
+        val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val username = pref.getString(App.PrefNames.USERNAME, "")
+        val param = RequestParams(App.CMD)
+        param.addBodyParameter("cmd", "11")
+        param.addBodyParameter("name", username)
+        param.addBodyParameter("user", nick)
         x.http().post(param, object : Callback.CommonCallback<String> {
             override fun onSuccess(result: String) {
                 val cw = JsonSyncUtils.getJsonValue(result, "cw")
                 when (cw) {
                     "0" -> {
                         ToastUtil.showToast("修改成功！")
-                        pref.edit().putString(App.PrefNames.NICKNAME,nick).apply()
+                        pref.edit().putString(App.PrefNames.NICKNAME, nick).apply()
                         finish()
                     }
                     "1" -> ToastUtil.showToast("用户未找到！")
+                    "2" -> ToastUtil.showToast(JsonSyncUtils.getJsonValue(result, "msg"))
                     else -> ToastUtil.showToast("系统错误！")
                 }
             }

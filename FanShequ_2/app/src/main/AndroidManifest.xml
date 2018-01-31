@@ -45,11 +45,13 @@
         <activity android:name=".user_page.BasicSettingsActivity" />
         <activity android:name=".user_page.AboutActivity" />
         <activity android:name=".user_page.AccountSetsActivity" />
-        <activity android:name=".user_page.MyOrdersActivity" />
         <activity android:name=".user_page.ResetPwdActivity" />
         <activity android:name=".user_page.NickSetActivity" />
-        <activity android:name=".home_page.ChooseCellActivity"/>
-        <activity android:name=".user_page.MessagesActivity"></activity>
+        <activity android:name=".home_page.ChooseCellActivity" />
+        <activity android:name=".user_page.MessagesActivity" />
+        <activity android:name=".user_page.OrderListActivity" />
+        <activity android:name=".user_page.OrderDetailsActivity" />
+        <activity android:name=".user_page.EvaluateActivity"/>
         <!-- android6.0拍照权限调取 -->
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -67,7 +69,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-        <!-- My JPush Receiver-->
+        <!-- My JPush Receiver -->
         <receiver
             android:name=".receiver.MyJPushReciver"
             android:enabled="true">
@@ -81,6 +83,7 @@
                 <category android:name="com.adplayer.fanhong.adplayer" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
