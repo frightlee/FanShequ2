@@ -14,9 +14,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import com.fanhong.cn.App
@@ -25,6 +23,7 @@ import com.fanhong.cn.myviews.PhotoSelectWindow
 import com.fanhong.cn.tools.FileUtil
 import com.fanhong.cn.tools.GetImagePath
 import com.fanhong.cn.tools.JsonSyncUtils
+import com.fanhong.cn.user_page.shippingaddress.MyAddressActivity
 import kotlinx.android.synthetic.main.activity_account_sets.*
 import kotlinx.android.synthetic.main.activity_top.*
 import org.xutils.common.Callback
@@ -110,7 +109,10 @@ class AccountSetsActivity : AppCompatActivity() {
         startActivity(Intent(this, NickSetActivity::class.java))
     }
 
-    fun onAddress(v: View) {}
+    fun onAddress(v: View) {
+        startActivity(Intent(this@AccountSetsActivity, MyAddressActivity::class.java))
+    }
+
     fun onResetPwd(v: View) {
         startActivity(Intent(this, ResetPwdActivity::class.java))
     }
@@ -201,14 +203,14 @@ class AccountSetsActivity : AppCompatActivity() {
 //            img_head.setImageBitmap(photo)
             val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
             val username = pref.getString(App.PrefNames.USERNAME, "")
-            val userId = pref.getInt(App.PrefNames.USERID, -1)
+            val userId = pref.getString(App.PrefNames.USERID, "-1")
             val file: File = FileUtil.compressImage(photo, Environment.getExternalStorageDirectory().toString() + "/Fanshequ/$username.jpg")
 
 //            Log.e("testLog", "file.length=${file.length()}")
             val param = RequestParams(App.HEAD_UPLOAD)
             param.addBodyParameter("touxiang", file)
             param.addBodyParameter("tel", username)
-            param.addBodyParameter("uid", userId.toString())
+            param.addBodyParameter("uid", userId)
             param.isMultipart = true//以表单形式提交，否则后台接收不到
             val cancelAble = x.http().post(param, object : Callback.CommonCallback<String> {
                 override fun onFinished() {

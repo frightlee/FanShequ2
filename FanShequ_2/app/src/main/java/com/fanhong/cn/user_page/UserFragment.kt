@@ -2,7 +2,6 @@ package com.fanhong.cn.user_page
 
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -50,7 +49,7 @@ class UserFragment : Fragment() {
                 if (isLogged()) {
                     val intent = Intent(activity, AccountSetsActivity::class.java)
                     startActivity(intent)
-                }else ToastUtil.showToast("请登录！")
+                }else ToastUtil.showToastL("请登录！")
             }
             R.id.news_notice -> {//消息通知
                     val intent = Intent(activity, MessagesActivity::class.java)
@@ -60,7 +59,7 @@ class UserFragment : Fragment() {
                 if (isLogged()) {
                     val intent = Intent(activity, OrderListActivity::class.java)
                     startActivity(intent)
-                }else ToastUtil.showToast("请登录！")
+                }else ToastUtil.showToastL("请登录！")
             }
             R.id.customer_hotline -> {//客服热线
                 val phoneNumber = tv_hotline.text.toString().trim()
@@ -87,7 +86,7 @@ class UserFragment : Fragment() {
 
     private fun isLogged(): Boolean  {
         val pref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
-        return pref.getInt(App.PrefNames.USERID, -1) != -1
+        return pref.getString(App.PrefNames.USERID, "-1") != "-1"
     }
 
     private fun callDialog(phoneNumber: String) {
@@ -111,7 +110,7 @@ class UserFragment : Fragment() {
                 val phoneNumber = tv_hotline.text.toString().trim()
                 callDialog(phoneNumber)
             } else
-                ToastUtil.showToast("需要通话权限！")
+                ToastUtil.showToastL("需要通话权限！")
         }
     }
 
@@ -124,10 +123,10 @@ class UserFragment : Fragment() {
         about_us.setOnClickListener(listener)
     }
 
-    fun refreshUser() {
+    private fun refreshUser() {
         val pref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val userId = pref.getInt(App.PrefNames.USERID, -1)
-        if (userId != -1) {
+        val userId = pref.getString(App.PrefNames.USERID, "-1")
+        if (userId != "-1") {
             mine_photo.isEnabled = false
             user_name.isEnabled = false
         } else {

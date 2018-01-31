@@ -1,6 +1,7 @@
 package com.fanhong.cn
 
 import android.app.Application
+import android.content.SharedPreferences
 
 import org.xutils.x
 
@@ -17,6 +18,7 @@ class App : Application() {
         val HEAD_UPLOAD = "http://m.wuyebest.com/index.php/App/index/newupapp"//头像上传路径
 
         var lastCodeMsgTime = 0L
+
     }
 
     /**
@@ -28,7 +30,7 @@ class App : Application() {
         val USERNAME = "Name"  //用户名 String
         val PASSOWRD = "Password"  //密码（加密前）String
         val NICKNAME = "Nick"//用户昵称 String
-        val USERID = "userId"  //用户Id Int
+        val USERID = "userId"  //用户Id String
         val HEADIMG = "Logo"//用户头像地址 String
         val TOKEN = "token"//融云Token String
         val ISNOTIFY = "notifyMsg"//是否开启通知 Boolean

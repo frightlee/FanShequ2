@@ -49,7 +49,7 @@ class OrderListActivity : AppCompatActivity() {
         orderList.clear()
 
         val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
-        val uid = pref.getInt(App.PrefNames.USERID, -1).toString()
+        val uid = pref.getString(App.PrefNames.USERID, "-1")
         val param = RequestParams(App.CMD)
         param.addBodyParameter("cmd", "1003")
         param.addBodyParameter("uid", uid)
@@ -62,7 +62,7 @@ class OrderListActivity : AppCompatActivity() {
                         orderList = JsonSyncUtils.getOrderList(data)
                         runOnUiThread { adapter?.notifyDataSetChanged() }
                     }
-                    else -> ToastUtil.showToast("参数错误！")
+                    else -> ToastUtil.showToastL("参数错误！")
                 }
             }
 
@@ -70,7 +70,7 @@ class OrderListActivity : AppCompatActivity() {
             }
 
             override fun onError(ex: Throwable?, isOnCallback: Boolean) {
-                ToastUtil.showToast("连接服务器失败，请检查网络连接")
+                ToastUtil.showToastL("连接服务器失败，请检查网络连接")
             }
 
             override fun onFinished() {

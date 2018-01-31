@@ -276,7 +276,7 @@ class HomeActivity : AppCompatActivity() {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startUpdating(apkName)
             } else
-                ToastUtil.showToast("需要文件读写权限！")
+                ToastUtil.showToastL("需要文件读写权限！")
     }
 
     /**

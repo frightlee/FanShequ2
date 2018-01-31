@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.fanhong.cn.App
 import com.fanhong.cn.HomeActivity
 import com.fanhong.cn.R
@@ -31,17 +30,17 @@ class ResetPwdActivity : AppCompatActivity() {
             val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
             val savedPwd = pref.getString(App.PrefNames.PASSOWRD, "")
             if (currentPwd != savedPwd) {
-                ToastUtil.showToast("初始密码错误！")
+                ToastUtil.showToastL("初始密码错误！")
                 return@setOnClickListener
             }
             val newPwd = edt_newPwd.text.toString().trim()
             if (savedPwd == newPwd) {
-                ToastUtil.showToast("新密码与初始密码相同，无需设置！")
+                ToastUtil.showToastL("新密码与初始密码相同，无需设置！")
                 return@setOnClickListener
             }
             val confirmPwd = edt_confirmPwd.text.toString().trim()
             if (newPwd != confirmPwd) {
-                ToastUtil.showToast("新设密码与确认密码不同")
+                ToastUtil.showToastL("新设密码与确认密码不同")
                 return@setOnClickListener
             }
             val name = pref.getString(App.PrefNames.USERNAME, "")
@@ -56,10 +55,10 @@ class ResetPwdActivity : AppCompatActivity() {
                     val cw = JsonSyncUtils.getJsonValue(result, "cw")
                     when (cw) {
                         "0" -> {
-                            ToastUtil.showToast("修改成功！请重新登录")
+                            ToastUtil.showToastL("修改成功！请重新登录")
 
                             val editor = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
-                            editor.putInt(App.PrefNames.USERID, -1)
+                            editor.putString(App.PrefNames.USERID,"-1")
                             editor.putString(App.PrefNames.USERNAME, null)
                             editor.putString(App.PrefNames.TOKEN, null)
                             editor.putString(App.PrefNames.NICKNAME, null)
@@ -72,8 +71,8 @@ class ResetPwdActivity : AppCompatActivity() {
                             val intent1 = Intent(applicationContext, LoginActivity::class.java)
                             startActivityForResult(intent1, HomeActivity.ACTION_LOGIN)
                         }
-                        "1" -> ToastUtil.showToast("用户未找到！")
-                        else -> ToastUtil.showToast("系统错误！")
+                        "1" -> ToastUtil.showToastL("用户未找到！")
+                        else -> ToastUtil.showToastL("系统错误！")
                     }
                 }
 
@@ -81,7 +80,7 @@ class ResetPwdActivity : AppCompatActivity() {
                 }
 
                 override fun onError(ex: Throwable?, isOnCallback: Boolean) {
-                    ToastUtil.showToast("访问服务器失败，请检查网络！")
+                    ToastUtil.showToastL("访问服务器失败，请检查网络！")
                 }
 
                 override fun onCancelled(cex: Callback.CancelledException?) {
