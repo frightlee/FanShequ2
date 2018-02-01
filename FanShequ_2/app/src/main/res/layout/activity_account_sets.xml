@@ -37,11 +37,13 @@
         <ImageView
             android:id="@+id/img_head"
             android:layout_width="100px"
-            android:layout_height="86px"
+            android:layout_height="100px"
+            android:padding="10px"
             android:scaleType="centerInside"
             android:src="@mipmap/ico_tx" />
 
         <ImageView
+            android:id="@+id/img_arrow_right"
             android:layout_width="wrap_content"
             android:layout_height="100px"
             android:layout_margin="10px"

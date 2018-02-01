@@ -1,6 +1,7 @@
 package com.fanhong.cn.user_page
 
 import android.content.Context
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -44,6 +45,9 @@ class NickSetActivity : AppCompatActivity() {
 
                         ToastUtil.showToastL("修改成功！")
                         pref.edit().putString(App.PrefNames.NICKNAME,nick).apply()
+                        val i=Intent()
+                        i.putExtra("nick",nick)
+                        setResult(25,i)
                         finish()
                     }
                     "1" -> ToastUtil.showToastL("用户未找到！")

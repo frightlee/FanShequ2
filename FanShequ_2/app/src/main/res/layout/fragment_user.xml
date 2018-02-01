@@ -15,6 +15,7 @@
             android:layout_width="160px"
             android:layout_height="160px"
             android:src="@mipmap/mine_photo"
+            android:padding="3px"
             android:layout_centerVertical="true"
             android:onClick="onLogin"
             android:layout_marginLeft="30px"/>

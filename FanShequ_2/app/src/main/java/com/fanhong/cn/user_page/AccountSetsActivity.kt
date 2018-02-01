@@ -23,6 +23,7 @@ import com.fanhong.cn.myviews.PhotoSelectWindow
 import com.fanhong.cn.tools.FileUtil
 import com.fanhong.cn.tools.GetImagePath
 import com.fanhong.cn.tools.JsonSyncUtils
+import com.fanhong.cn.tools.ToastUtil
 import com.fanhong.cn.user_page.shippingaddress.MyAddressActivity
 import kotlinx.android.synthetic.main.activity_account_sets.*
 import kotlinx.android.synthetic.main.activity_top.*
@@ -40,6 +41,7 @@ class AccountSetsActivity : AppCompatActivity() {
         private val TAKE_PHOTO = 21
         private val CHOOSE_PIC = 22
         private val CUT_PICTURE = 23
+        private val SET_NICK = 24
     }
 
     private var file: File? = null
@@ -106,7 +108,7 @@ class AccountSetsActivity : AppCompatActivity() {
     }
 
     fun onNickName(v: View) {
-        startActivity(Intent(this, NickSetActivity::class.java))
+        startActivityForResult(Intent(this, NickSetActivity::class.java), SET_NICK)
     }
 
     fun onAddress(v: View) {
@@ -200,7 +202,6 @@ class AccountSetsActivity : AppCompatActivity() {
             // 取得SDCard图片路径做显示
             val photo = extras.getParcelable<Bitmap>("data")
 //            val drawable = BitmapDrawable(null, photo)
-//            img_head.setImageBitmap(photo)
             val pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
             val username = pref.getString(App.PrefNames.USERNAME, "")
             val userId = pref.getString(App.PrefNames.USERID, "-1")
@@ -214,31 +215,31 @@ class AccountSetsActivity : AppCompatActivity() {
             param.isMultipart = true//以表单形式提交，否则后台接收不到
             val cancelAble = x.http().post(param, object : Callback.CommonCallback<String> {
                 override fun onFinished() {
-                    val headUrl = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.HEADIMG, "")
-                    val option = ImageOptions.Builder().setCircular(true)
-                            .setLoadingDrawableId(R.mipmap.ico_tx)
-                            .setFailureDrawableId(R.mipmap.ico_tx)
-                            .setUseMemCache(true).build()
-                    x.image().bind(img_head, headUrl, option)
                 }
 
                 @SuppressLint("ApplySharedPref")
                 override fun onSuccess(result: String) {
                     val cw = JsonSyncUtils.getJsonValue(result, "cw")
                     if (cw == "0") {
+                        img_head.setImageBitmap(photo)
+                        ToastUtil.showToastL("修改成功！")
                         val token = JsonSyncUtils.getJsonValue(result, "token")
                         val headUrl = JsonSyncUtils.getJsonValue(result, "logo")
                         val editor = pref.edit()
                         editor.putString(App.PrefNames.TOKEN, token)
                         editor.putString(App.PrefNames.HEADIMG, headUrl)
                         editor.commit()
-                    }
+
+                        x.image().clearMemCache()
+                        x.image().clearCacheFiles()
+                    } else ToastUtil.showToastL("修改失败！")
                 }
 
                 override fun onCancelled(cex: Callback.CancelledException?) {
                 }
 
                 override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                    ToastUtil.showToastL("访问服务器失败，请检查网络连接")
                 }
             })
 //            cancelAble.cancel()
@@ -276,11 +277,12 @@ class AccountSetsActivity : AppCompatActivity() {
                 }
 
             }
-            CUT_PICTURE -> {
-                if (data != null) {
-                    setPicToView(data)
-                }
-            }
+            CUT_PICTURE -> if (data != null) setPicToView(data)
+
+
+            SET_NICK -> if (null != data) tv_nick.text = data.getStringExtra("nick")
+
+
         }
     }
 }
