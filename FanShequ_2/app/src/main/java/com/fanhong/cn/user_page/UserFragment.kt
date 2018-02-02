@@ -7,12 +7,14 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +22,7 @@ import com.fanhong.cn.App
 import com.fanhong.cn.R
 import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.fragment_user.*
+import org.xutils.common.Callback
 import org.xutils.image.ImageOptions
 import org.xutils.x
 
@@ -49,17 +52,17 @@ class UserFragment : Fragment() {
                 if (isLogged()) {
                     val intent = Intent(activity, AccountSetsActivity::class.java)
                     startActivity(intent)
-                }else ToastUtil.showToastL("请登录！")
+                } else ToastUtil.showToastL("请登录！")
             }
             R.id.news_notice -> {//消息通知
-                    val intent = Intent(activity, MessagesActivity::class.java)
-                    startActivity(intent)
+                val intent = Intent(activity, MessagesActivity::class.java)
+                startActivity(intent)
             }
             R.id.my_order -> {//我的订单
                 if (isLogged()) {
                     val intent = Intent(activity, OrderListActivity::class.java)
                     startActivity(intent)
-                }else ToastUtil.showToastL("请登录！")
+                } else ToastUtil.showToastL("请登录！")
             }
             R.id.customer_hotline -> {//客服热线
                 val phoneNumber = tv_hotline.text.toString().trim()
@@ -84,7 +87,7 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun isLogged(): Boolean  {
+    private fun isLogged(): Boolean {
         val pref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         return pref.getString(App.PrefNames.USERID, "-1") != "-1"
     }
@@ -139,10 +142,36 @@ class UserFragment : Fragment() {
                 .setLoadingDrawableId(R.mipmap.mine_photo)
                 .setFailureDrawableId(R.mipmap.mine_photo)
                 .setUseMemCache(true).build()
-        x.image().bind(mine_photo, headImg, option)
+        refreshHead(headImg, option, 1)
         if (null == nickName || nickName == "")
             nickName = pref.getString(App.PrefNames.USERNAME, getString(R.string.keylogin))
         user_name.text = nickName
+    }
+
+    private fun refreshHead(headImg: String, option: ImageOptions, times: Int) {
+        if (times <= 5)
+            x.image().bind(mine_photo, headImg, option, object : Callback.CommonCallback<Drawable> {
+                var isSuccess=false
+                override fun onSuccess(result: Drawable?) {
+//                    Log.e("testLog","time=$times:onSuccess")
+                    isSuccess=true
+                }
+
+                override fun onCancelled(cex: Callback.CancelledException?) {
+//                    Log.e("testLog","time=$times:onCancelled")
+                }
+
+                override fun onFinished() {
+                    if (!isSuccess)
+                        refreshHead(headImg, option, times + 1)
+//                    Log.e("testLog","time=$times:onFinished")
+                }
+
+                override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+//                    Log.e("testLog","time=$times:onError")
+                }
+            })
+
     }
 
 }
