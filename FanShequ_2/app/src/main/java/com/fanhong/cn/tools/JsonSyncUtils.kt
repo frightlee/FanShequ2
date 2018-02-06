@@ -60,7 +60,7 @@ object JsonSyncUtils {
      */
     @Synchronized
     fun getStringList(data: String, key: String): MutableList<String> {
-        val list:MutableList<String> = ArrayList()
+        val list: MutableList<String> = ArrayList()
         try {
             val jsonArray = JSONArray(data)
             (0 until jsonArray.length())
@@ -94,7 +94,7 @@ object JsonSyncUtils {
         return list
     }
 
-    fun getOrderGoodsList(data: String): MutableList<OrderDetailsActivity.Goods> {
+    fun getOrderGoodsList(data: String, orderId: String): MutableList<OrderDetailsActivity.Goods> {
         val list: MutableList<OrderDetailsActivity.Goods> = ArrayList()
         try {
             val jsonArray = JSONArray(data)
@@ -105,7 +105,7 @@ object JsonSyncUtils {
                         val number = it.optString("gsl")
                         val name = it.optString("name")
                         val isEvaluate = it.optString("pl") == "2"//1未评价，2已评价
-                        OrderDetailsActivity.Goods(name, id, number, isEvaluate)
+                        OrderDetailsActivity.Goods(name, id, number, isEvaluate, orderId)
                     }
         } catch (e: JSONException) {
             e.printStackTrace()
