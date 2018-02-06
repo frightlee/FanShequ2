@@ -49,17 +49,14 @@
         <activity android:name=".user_page.ResetPwdActivity" />
         <activity android:name=".user_page.NickSetActivity" />
         <activity android:name=".home_page.ChooseCellActivity" />
-
         <activity android:name=".user_page.MessagesActivity" />
         <activity android:name=".user_page.OrderListActivity" />
         <activity android:name=".user_page.OrderDetailsActivity" />
-        <activity android:name=".user_page.EvaluateActivity"/>
-
+        <activity android:name=".user_page.EvaluateActivity" />
         <activity android:name=".user_page.shippingaddress.AddAddressActivity" />
         <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
-
         <activity android:name=".user_page.shippingaddress.EditAddressActivity" />
-        <activity android:name=".home_page.BannerInActivity"></activity>
+        <activity android:name=".home_page.BannerInActivity" />
 
         <!-- android6.0拍照权限调取 -->
         <provider
@@ -93,7 +90,7 @@
             </intent-filter>
         </receiver>
 
-
+        <activity android:name=".home_page.StarManagerActivity"></activity>
     </application>
 
 </manifest>

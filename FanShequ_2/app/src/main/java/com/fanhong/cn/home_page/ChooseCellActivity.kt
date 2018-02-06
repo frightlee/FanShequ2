@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.AdapterView
 import com.fanhong.cn.App
 import com.fanhong.cn.R
@@ -94,6 +95,7 @@ class ChooseCellActivity : AppCompatActivity() {
         cell_list.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             var cellName = ((adapter!!.getItem(position)) as SortModel).lname
             var cellId = NameIdModel.findModel(list,cellName)!!.id
+//            Log.i("xq","xid==>$cellId")
             var intent = Intent()
             intent.putExtra("gardenName",cellName)
                     .putExtra("gardenId",cellId)

@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import com.fanhong.cn.App
 import com.fanhong.cn.R
+import com.fanhong.cn.tools.DialogUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -49,8 +52,19 @@ class HomeFragment : Fragment() {
         tv_shequ_gonggao.setOnClickListener {
 
         }
-        tv_wuye_star.setOnClickListener{
-
+        tv_wuye_star.setOnClickListener {
+            if (isLogined()) {
+                if (choosedCell()){
+                    var i = Intent(activity,StarManagerActivity::class.java)
+                    i.putExtra("id",mSharedPref!!.getString(App.PrefNames.GARDENID,""))
+                    i.putExtra("name",mSharedPref!!.getString(App.PrefNames.GARDENNAME,""))
+                    startActivity(i)
+                }else{
+                    DialogUtil.showDialog(1,activity)
+                }
+            } else {
+                DialogUtil.showDialog(0, activity)
+            }
         }
     }
 
@@ -128,4 +142,7 @@ class HomeFragment : Fragment() {
         return mSharedPref!!.getString(App.PrefNames.USERID, "-1") != "-1"
     }
 
+    private fun choosedCell(): Boolean {
+        return !TextUtils.isEmpty(mSharedPref!!.getString(App.PrefNames.GARDENNAME, ""))
+    }
 }

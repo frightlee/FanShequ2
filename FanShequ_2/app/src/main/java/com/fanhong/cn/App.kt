@@ -40,8 +40,8 @@ class App : Application() {
         val HEADIMG = "Logo"//用户头像地址 String
         val TOKEN = "token"//融云Token String
         val ISNOTIFY = "notifyMsg"//是否开启通知 Boolean
-        val GARDENNAME = "gardenName" //小区名字
-        val GARDENID = "gardenId" //小区id
+        val GARDENNAME = "gardenName" //小区名字 String
+        val GARDENID = "gardenId" //小区id  String
     }
 
     override fun onCreate() {

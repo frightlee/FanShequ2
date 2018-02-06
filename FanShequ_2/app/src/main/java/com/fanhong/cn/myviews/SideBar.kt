@@ -14,7 +14,7 @@ import com.fanhong.cn.R
 
 class SideBar(context: Context,attrs: AttributeSet?) : View(context, attrs) {
     companion object {
-        val b = arrayOf("热门","A", "B", "C", "D", "E", "F", "G", "H", "I",
+        val b = arrayOf("A", "B", "C", "D", "E", "F", "G", "H", "I",
                 "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
                 "W", "X", "Y", "Z", "#")
     }
