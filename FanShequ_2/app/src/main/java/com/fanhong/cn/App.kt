@@ -2,6 +2,11 @@ package com.fanhong.cn
 
 import android.app.Application
 import android.content.SharedPreferences
+import cn.finalteam.galleryfinal.CoreConfig
+import cn.finalteam.galleryfinal.FunctionConfig
+import cn.finalteam.galleryfinal.GalleryFinal
+import cn.finalteam.galleryfinal.ThemeConfig
+import com.fanhong.cn.tools.XImageLoader
 
 import org.xutils.x
 
@@ -42,5 +47,25 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         x.Ext.init(this)
+
+        val theme=ThemeConfig.Builder()
+                .setTitleBarBgColor(resources.getColor(R.color.skyblue))
+                .setCheckSelectedColor(resources.getColor(R.color.skyblue))
+                .setCropControlColor(resources.getColor(R.color.skyblue))
+                .setIconCamera(R.mipmap.camera)
+                .build()
+        val functionCfg=FunctionConfig.Builder()
+                .setEnableCamera(true)
+                .setEnableEdit(true)
+                .setEnableCrop(true)
+                .setEnableRotate(true)
+                .setCropSquare(true)
+                .setEnablePreview(true)
+                .build()
+        val imgLoader=XImageLoader()
+        val coreCfg=CoreConfig.Builder(this,imgLoader,theme)
+                .setFunctionConfig(functionCfg)
+                .build()
+        GalleryFinal.init(coreCfg)
     }
 }

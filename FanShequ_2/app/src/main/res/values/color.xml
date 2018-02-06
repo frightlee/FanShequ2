@@ -7,6 +7,8 @@
     <color name="skyblue">#1ab3ff</color>
     <color name="lightblue">#80d4ff</color>
     <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="alpha_black">#50000000</color>
     <color name="red">#ff0000</color>
     <color name="lightred">#ff4d4d</color>
     <color name="warnred">#ff4b4b</color>

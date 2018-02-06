@@ -236,6 +236,7 @@
 	<string name="confirmReset">确认修改</string>
 	<string name="nickHint">请输入昵称</string>
 	<string name="save">保存</string>
+	<string name="commit">提交</string>
 	<string name="orderDetails">订单详情</string>
 	<string name="goodsList">购买商品清单：</string>
 	<string name="consignee">收货人：</string>

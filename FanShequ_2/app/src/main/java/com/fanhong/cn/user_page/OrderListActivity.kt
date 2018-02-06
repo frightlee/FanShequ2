@@ -62,7 +62,7 @@ class OrderListActivity : AppCompatActivity() {
                         orderList = JsonSyncUtils.getOrderList(data)
                         runOnUiThread { adapter?.notifyDataSetChanged() }
                     }
-                    else -> ToastUtil.showToastL("参数错误！")
+//                    else -> ToastUtil.showToastL("参数错误！")
                 }
             }
 

@@ -72,8 +72,8 @@ class OrderDetailsActivity : AppCompatActivity() {
                         tv_totalPaid.text = "￥${JsonSyncUtils.getJsonValue(data, "zjje")}"//支付金额
 
                         val goods = JsonSyncUtils.getJsonValue(data, "goods")
-                        Log.e("testLog", data)
-                        goodsList = JsonSyncUtils.getOrderGoodsList(goods)
+//                        Log.e("testLog", data)
+                        goodsList = JsonSyncUtils.getOrderGoodsList(goods,gid)
                         runOnUiThread { adapter?.notifyDataSetChanged() }
                     }
                     else -> ToastUtil.showToastL("参数错误！")
@@ -94,7 +94,7 @@ class OrderDetailsActivity : AppCompatActivity() {
 //        adapter?.notifyDataSetChanged()
     }
 
-    data class Goods(val name: String, val id: String, val number: String, val isEvaluated: Boolean)
+    data class Goods(val name: String, val id: String, val number: String, val isEvaluated: Boolean,val orderId:String)
     private class GoodsAdapter(val context: Context) : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val holder: ViewHolder?
@@ -116,6 +116,7 @@ class OrderDetailsActivity : AppCompatActivity() {
                 holder.evaluate?.setOnClickListener {
                     val intent = Intent(context, EvaluateActivity::class.java)
                     intent.putExtra("goodsId", data.id)
+                    intent.putExtra("orderId", data.orderId)
                     intent.putExtra("goodsName", data.name)
                     context.startActivity(intent)
                 }

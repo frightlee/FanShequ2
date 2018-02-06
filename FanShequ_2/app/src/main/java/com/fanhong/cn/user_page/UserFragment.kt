@@ -61,6 +61,7 @@ class UserFragment : Fragment() {
             R.id.my_order -> {//我的订单
                 if (isLogged()) {
                     val intent = Intent(activity, OrderListActivity::class.java)
+//                    val intent = Intent(activity, EvaluateActivity::class.java)
                     startActivity(intent)
                 } else ToastUtil.showToastL("请登录！")
             }
