@@ -248,6 +248,12 @@
     <string name="evaluate">评价</string>
     <string name="evaluateHint">写下商品评价来帮助其他小伙伴</string>
 
-
+    <string name="zhaomutop">尊敬的用户：\n
+                            \u3000\u3000您好！您当前已参加本次招募，您的收益结果查询如下，
+                            感谢您的参与！</string>
+    <string name="zhaomubottom">* 注：佣金金额根据实际门的数量来计算，如合同上签了10个门，我公司实地调查
+                            有11个门，门的数量将以11个门来计算。\n
+                            佣金金额=实际门的数量*50元/门</string>
+	<string name="little_tip">请保持手机24小时畅通，稍后会有客服人员与你核对资料</string>
     <!---->
 </resources>

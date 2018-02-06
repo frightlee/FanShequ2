@@ -49,7 +49,7 @@ class StarManagerActivity : AppCompatActivity() {
                 }
                 tv_description.text = Html.fromHtml(description)
                 tv_nearby.text = Html.fromHtml(nearby)
-                label_price.text = "物管费$price 元/平方米"
+                label_price.text = "物管费：${price}元/平方米"
             }
 
             override fun onCancelled(cex: Callback.CancelledException?) {

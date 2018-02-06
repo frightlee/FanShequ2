@@ -89,7 +89,11 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".home_page.StarManagerActivity"></activity>
+        <activity android:name=".home_page.StarManagerActivity" />
+        <activity android:name=".home_page.fenxiao.ZSIntroductionActivity" />
+        <activity android:name=".home_page.fenxiao.HaveJoinedActivity" />
+        <activity android:name=".home_page.fenxiao.JoiningActivity" />
+        <activity android:name=".home_page.fenxiao.PostSuccessActivity"></activity>
     </application>
 
 </manifest>

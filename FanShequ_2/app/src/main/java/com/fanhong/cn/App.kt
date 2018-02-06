@@ -37,6 +37,9 @@ class App : Application() {
         val ISNOTIFY = "notifyMsg"//是否开启通知 Boolean
         val GARDENNAME = "gardenName" //小区名字 String
         val GARDENID = "gardenId" //小区id  String
+
+        val LASTYEAR = "fx_last_year" //招商代理查询缓存最后一个年份
+        val LASTMONTH = "fx_last_month" //                      月份
     }
 
     override fun onCreate() {
