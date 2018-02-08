@@ -123,7 +123,7 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
-        rg_bottom.setOnCheckedChangeListener { group, checkedId ->
+        rg_bottom.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.tab_home -> {
                     home_viewpager.currentItem = 0
@@ -258,7 +258,6 @@ class HomeActivity : AppCompatActivity() {
     private fun startUpdating(targetName: String) {
         val manager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notifycation: Notification = Notification()
-        val intent = Intent(Intent.ACTION_VIEW)
         notifycation.icon = R.mipmap.ic_launcher
         notifycation.tickerText = "更新通知"
         notifycation.contentView = RemoteViews(this@HomeActivity.packageName, R.layout.softupdate_progress)

@@ -7,15 +7,19 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import com.fanhong.cn.App
+import com.fanhong.cn.HomeActivity
 import com.fanhong.cn.R
+import com.fanhong.cn.home_page.fenxiao.HaveJoinedActivity
+import com.fanhong.cn.home_page.fenxiao.ZSIntroductionActivity
 import com.fanhong.cn.tools.DialogUtil
+import com.fanhong.cn.tools.JsonSyncUtils
+import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.json.JSONArray
 import org.json.JSONException
@@ -50,20 +54,36 @@ class HomeFragment : Fragment() {
             startActivity(Intent(activity, BannerInActivity::class.java))
         }
         tv_shequ_gonggao.setOnClickListener {
-
+            if (isLogined()) {
+                if (choosedCell()) {
+                    (activity as HomeActivity).setRadioButtonChecked(3)
+                } else {
+                    DialogUtil.showDialog(activity,"chooseCell",110)
+                }
+            } else {
+                DialogUtil.showDialog(activity,"login",100)
+            }
         }
         tv_wuye_star.setOnClickListener {
             if (isLogined()) {
-                if (choosedCell()){
-                    var i = Intent(activity,StarManagerActivity::class.java)
-                    i.putExtra("id",mSharedPref!!.getString(App.PrefNames.GARDENID,""))
-                    i.putExtra("name",mSharedPref!!.getString(App.PrefNames.GARDENNAME,""))
+                if (choosedCell()) {
+                    val i = Intent(activity, StarManagerActivity::class.java)
+                    i.putExtra("id", mSharedPref!!.getString(App.PrefNames.GARDENID, ""))
+                    i.putExtra("name", mSharedPref!!.getString(App.PrefNames.GARDENNAME, ""))
                     startActivity(i)
                 }else{
                     DialogUtil.showDialog(activity,"chooseCell",110)
                 }
             } else {
                 DialogUtil.showDialog(activity,"login",100)
+            }
+        }
+        tv_zhaoshang_daili.setOnClickListener {
+            if (isLogined()) {
+                var uid = mSharedPref!!.getString(App.PrefNames.USERID, "-1")
+                checkJoined(uid)
+            } else {
+                startActivity(Intent(activity, ZSIntroductionActivity::class.java))
             }
         }
     }
@@ -124,7 +144,6 @@ class HomeFragment : Fragment() {
         when (resultCode) {
             51 -> { //选择小区的回调
                 val gardenName = data!!.getStringExtra("gardenName")
-                val gardenId = data!!.getStringExtra("gardenId")
                 show_cell_name.text = gardenName
             }
         }
@@ -141,5 +160,32 @@ class HomeFragment : Fragment() {
 
     private fun choosedCell(): Boolean {
         return !TextUtils.isEmpty(mSharedPref!!.getString(App.PrefNames.GARDENNAME, ""))
+    }
+
+    private fun checkJoined(uid: String) {
+        var params = RequestParams(App.CMD)
+        params.addBodyParameter("cmd", "69")
+        params.addBodyParameter("uid", uid)
+        x.http().post(params, object : Callback.CommonCallback<String> {
+            override fun onFinished() {
+            }
+
+            override fun onSuccess(result: String?) {
+                var data = JsonSyncUtils.getJsonValue(result!!, "data").toInt()
+                when (data) {
+                    0 -> startActivity(Intent(activity, ZSIntroductionActivity::class.java))
+                    1 -> startActivity(Intent(activity, HaveJoinedActivity::class.java))
+                    else -> ToastUtil.showToastS("登录状态异常")
+                }
+            }
+
+            override fun onCancelled(cex: Callback.CancelledException?) {
+            }
+
+            override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                ToastUtil.showToastS("登录状态异常")
+            }
+
+        })
     }
 }

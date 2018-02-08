@@ -230,8 +230,8 @@ class AccountSetsActivity : AppCompatActivity() {
                         editor.putString(App.PrefNames.HEADIMG, headUrl)
                         editor.commit()
 
-                        x.image().clearMemCache()
-                        x.image().clearCacheFiles()
+//                        x.image().clearMemCache()
+//                        x.image().clearCacheFiles()
                     } else ToastUtil.showToastL("修改失败！")
                 }
 

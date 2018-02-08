@@ -209,7 +209,7 @@
     <string name="newsnotice">消息通知</string>
     <string name="mytradeno">我的订单</string>
     <string name="kehurexian">客服热线</string>
-    <string name="Customerhotline">023-68872002</string>
+    <string name="Customerhotline">023–68872002</string>
     <string name="tongyongsz">通用设置</string>
     <string name="aboutour">关于我们</string>
     <string name="notify_msg">消息提醒</string>
@@ -224,7 +224,7 @@
     <string name="if_sure_delete">是否确认删除？</string>
     <string name="clearcache">清除缓存</string>
     <string name="logout">退出登录</string>
-    <string name="copyright">Copyright ©2015-2018\n重庆凡鸿通信技术有限公司</string>
+    <string name="copyright">Copyright ©2015–2018\n重庆凡鸿通信技术有限公司</string>
     <string name="head">头像</string>
     <string name="nick">昵称</string>
     <string name="account">账号</string>
@@ -253,5 +253,14 @@
     <string name="nearNews">附近新闻</string>
     <string name="commNews">小区新闻</string>
     <string name="newsDetail">新闻详情</string>
+
+	<!--招募-->
+    <string name="zhaomutop">尊敬的用户：\n
+                            \u3000\u3000您好！您当前已参加本次招募，您的收益结果查询如下，
+                            感谢您的参与！</string>
+    <string name="zhaomubottom">* 注：佣金金额根据实际门的数量来计算，如合同上签了10个门，我公司实地调查
+                            有11个门，门的数量将以11个门来计算。\n
+                            佣金金额=实际门的数量*50元/门</string>
+	<string name="little_tip">请保持手机24小时畅通，稍后会有客服人员与你核对资料</string>
     <!---->
 </resources>

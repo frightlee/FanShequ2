@@ -45,6 +45,10 @@
         <activity android:name=".login_pages.AgreementSheetActivity" />
         <activity android:name=".home_page.BannerInActivity" />
         <activity android:name=".home_page.StarManagerActivity" />
+        <activity android:name=".home_page.fenxiao.ZSIntroductionActivity" />
+        <activity android:name=".home_page.fenxiao.HaveJoinedActivity" />
+        <activity android:name=".home_page.fenxiao.JoiningActivity" />
+        <activity android:name=".home_page.fenxiao.PostSuccessActivity"/>
         <activity android:name=".community_page.NewsDetailsActivity"/>
         <activity android:name=".user_page.BasicSettingsActivity" />
         <activity android:name=".user_page.AboutActivity" />
