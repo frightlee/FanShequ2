@@ -10,24 +10,24 @@ import com.fanhong.cn.login_pages.LoginActivity
  * Created by Administrator on 2018/1/31.
  */
 object DialogUtil {
-    fun showDialog(i:Int,activity: Activity){
-        val builder = AlertDialog.Builder(activity)
-        when(i){
-            0->{  //未登录
+    fun showDialog(activity: Activity,action: Any, requestCode: Int) {
+        val builder= AlertDialog.Builder(activity)
+        when (action) {
+            "login" -> {
                 builder.setTitle("你还未登录")
                         .setMessage("是否立即登录？")
                         .setPositiveButton("确定"){
-                            dialog, which ->
-                            activity.startActivityForResult(Intent(activity,LoginActivity::class.java),100)}
+                            _, _ ->
+                            activity.startActivityForResult(Intent(activity,LoginActivity::class.java),requestCode)}
                         .setNegativeButton("取消",null)
                         .show()
             }
-            1->{//未选择小区
+            "chooseCell" -> {
                 builder.setTitle("你还未选择小区")
                         .setMessage("是否立即去选择小区？")
                         .setPositiveButton("确定"){
-                            dialog, which ->
-                            activity.startActivityForResult(Intent(activity,ChooseCellActivity::class.java),110)}
+                            _, _ ->
+                            activity.startActivityForResult(Intent(activity, ChooseCellActivity::class.java), requestCode)}
                         .setNegativeButton("取消",null)
                         .show()
             }

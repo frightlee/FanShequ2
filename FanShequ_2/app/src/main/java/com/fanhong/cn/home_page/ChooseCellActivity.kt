@@ -1,5 +1,6 @@
 package com.fanhong.cn.home_page
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -99,6 +100,10 @@ class ChooseCellActivity : AppCompatActivity() {
             var intent = Intent()
             intent.putExtra("gardenName",cellName)
                     .putExtra("gardenId",cellId)
+            val editor = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)!!.edit()
+            editor.putString(App.PrefNames.GARDENNAME, cellName)
+            editor.putString(App.PrefNames.GARDENID, cellId)
+            editor.apply()
             setResult(51,intent)
             this@ChooseCellActivity.finish()
         }

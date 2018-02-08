@@ -1,5 +1,6 @@
 package com.fanhong.cn.tools
 
+import com.fanhong.cn.community_page.subsidiary.CommunityNewsBean
 import com.fanhong.cn.user_page.OrderDetailsActivity
 import com.fanhong.cn.user_page.OrderListActivity
 import org.json.JSONArray
@@ -73,6 +74,12 @@ object JsonSyncUtils {
         return list
     }
 
+
+    /*
+     * 定制方法
+     */
+
+    @Synchronized
     fun getOrderList(data: String): MutableList<OrderListActivity.MyOrder> {
         val list: MutableList<OrderListActivity.MyOrder> = ArrayList()
         try {
@@ -94,6 +101,7 @@ object JsonSyncUtils {
         return list
     }
 
+    @Synchronized
     fun getOrderGoodsList(data: String, orderId: String): MutableList<OrderDetailsActivity.Goods> {
         val list: MutableList<OrderDetailsActivity.Goods> = ArrayList()
         try {
@@ -107,6 +115,35 @@ object JsonSyncUtils {
                         val isEvaluate = it.optString("pl") == "2"//1未评价，2已评价
                         OrderDetailsActivity.Goods(name, id, number, isEvaluate, orderId)
                     }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        return list
+    }
+
+    @Synchronized
+    fun addNews(list: MutableList<CommunityNewsBean>, jsonObject: String, type: Int): MutableList<CommunityNewsBean> {
+        try {
+            val obj = JSONObject(jsonObject)
+            var datagroup = ""
+            when (type) {
+                CommunityNewsBean.TYPE_NEWS -> datagroup = "data1"
+                CommunityNewsBean.TYPE_INFORM -> datagroup = "data2"
+                CommunityNewsBean.TYPE_NOTICE -> datagroup = "data3"
+                CommunityNewsBean.TYPE_ACTIVE -> datagroup = "data4"
+            }
+            val dataJ = obj.getString(datagroup)
+            val array = JSONArray(dataJ)
+            for (i in 0 until array.length()) {
+                val objbean = array.opt(i) as JSONObject
+                val id=objbean.getString("id")
+                val photoUrl=objbean.getString("logo")
+                val title=objbean.getString("bt")
+                val author=objbean.getString("zz")
+                val time=objbean.getString("time")
+                list.add(CommunityNewsBean(id, photoUrl, title, author, time).setFlag(type))
+            }
         } catch (e: JSONException) {
             e.printStackTrace()
         }

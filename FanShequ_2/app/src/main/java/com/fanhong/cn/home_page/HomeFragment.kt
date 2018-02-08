@@ -60,10 +60,10 @@ class HomeFragment : Fragment() {
                     i.putExtra("name",mSharedPref!!.getString(App.PrefNames.GARDENNAME,""))
                     startActivity(i)
                 }else{
-                    DialogUtil.showDialog(1,activity)
+                    DialogUtil.showDialog(activity,"chooseCell",110)
                 }
             } else {
-                DialogUtil.showDialog(0, activity)
+                DialogUtil.showDialog(activity,"login",100)
             }
         }
     }
@@ -126,9 +126,6 @@ class HomeFragment : Fragment() {
                 val gardenName = data!!.getStringExtra("gardenName")
                 val gardenId = data!!.getStringExtra("gardenId")
                 show_cell_name.text = gardenName
-                val editor = mSharedPref!!.edit()
-                editor.putString(App.PrefNames.GARDENNAME, gardenName).apply()
-                editor.putString(App.PrefNames.GARDENID, gardenId).apply()
             }
         }
     }

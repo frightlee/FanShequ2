@@ -25,11 +25,13 @@ import android.widget.LinearLayout
 import android.widget.RemoteViews
 import android.widget.TextView
 import com.fanhong.cn.door_page.DoorFragment
+import com.fanhong.cn.home_page.ChooseCellActivity
 import com.fanhong.cn.home_page.CommunityFragment
 import com.fanhong.cn.home_page.HomeFragment
 import com.fanhong.cn.home_page.ServiceFragment
 import com.fanhong.cn.login_pages.LoginActivity
 import com.fanhong.cn.tools.AppCacheManager
+import com.fanhong.cn.tools.DialogUtil
 import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.tools.ToastUtil
 import com.fanhong.cn.user_page.UserFragment
@@ -46,6 +48,8 @@ class HomeActivity : AppCompatActivity() {
 
     companion object {
         val ACTION_LOGIN: Int = 21
+        val ACTION_LOGIN_BY_COMMUNITY: Int = 23
+        val ACTION_CHOOSE_BY_COMMUNITY: Int = 25
     }
 
     private val fragments: MutableList<Fragment> = ArrayList()
@@ -53,6 +57,7 @@ class HomeActivity : AppCompatActivity() {
     private var apkPath = ""
     private var apkName = ""
 
+    private var lastTab = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -86,23 +91,33 @@ class HomeActivity : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 when (position) {
                     0 -> {
-                        tab_home.isChecked = true
+                        setRadioButtonChecked(0)
                         setFloatIconsVisible(0)
                     }
                     1 -> {
-                        tab_service.isChecked = true
+                        setRadioButtonChecked(1)
                         setFloatIconsVisible(1)
                     }
                     2 -> {
-                        tab_door.isChecked = true
+                        setRadioButtonChecked(2)
                         setFloatIconsVisible(2)
                     }
                     3 -> {
-                        tab_interaction.isChecked = true
-                        setFloatIconsVisible(3)
+                        if (isLogged()) {
+                            if (isChoosenCell()) {
+                                setRadioButtonChecked(3)
+                                setFloatIconsVisible(3)
+                            } else {
+                                DialogUtil.showDialog(this@HomeActivity, "chooseCell", ACTION_CHOOSE_BY_COMMUNITY)
+                                home_viewpager.currentItem = lastTab
+                            }
+                        } else {
+                            DialogUtil.showDialog(this@HomeActivity, "login", ACTION_LOGIN_BY_COMMUNITY)
+                            home_viewpager.currentItem = lastTab
+                        }
                     }
                     4 -> {
-                        tab_user.isChecked = true
+                        setRadioButtonChecked(4)
                         setFloatIconsVisible(4)
                     }
                 }
@@ -124,7 +139,9 @@ class HomeActivity : AppCompatActivity() {
                 }
                 R.id.tab_interaction -> {
                     home_viewpager.currentItem = 3
-                    setFloatIconsVisible(3)
+                    if (isLogged() && isChoosenCell()) {
+                        setFloatIconsVisible(3)
+                    }
                 }
                 R.id.tab_user -> {
                     home_viewpager.currentItem = 4
@@ -134,14 +151,16 @@ class HomeActivity : AppCompatActivity() {
         }
 
     }
-    fun setRadioButtonChecked(i:Int){
-        when(i){
-            0->tab_home.isChecked = true
-            1->tab_service.isChecked = true
-            2->tab_door.isChecked = true
-            3->tab_interaction.isChecked =true
-            4->tab_user.isChecked = true
-            else->{}
+
+    fun setRadioButtonChecked(i: Int) {
+        when (i) {
+            0 -> tab_home.isChecked = true
+            1 -> tab_service.isChecked = true
+            2 -> tab_door.isChecked = true
+            3 -> tab_interaction.isChecked = true
+            4 -> tab_user.isChecked = true
+            else -> {
+            }
         }
     }
 
@@ -153,16 +172,21 @@ class HomeActivity : AppCompatActivity() {
             else
                 icons[i].visibility = View.GONE
         }
+        lastTab = o
     }
+
+    private fun isLogged() = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.USERID, "-1") != "-1"
+    private fun isChoosenCell() = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.GARDENID, "-1") != "-1"
+
     private var time1 = 0L
     private var time2 = 0L
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             time1 = System.currentTimeMillis()
-            if (time1-time2 >2000){
+            if (time1 - time2 > 2000) {
                 ToastUtil.showToastL("再按一次退出程序")
                 time2 = time1
-            }else{
+            } else {
                 //各种链接的注销写在这里
 
                 finish()
@@ -320,6 +344,17 @@ class HomeActivity : AppCompatActivity() {
         when (requestCode) {
             ACTION_LOGIN -> {
 //                (fragments[4] as UserFragment).refreshUser()
+            }
+            ACTION_LOGIN_BY_COMMUNITY -> {
+                if (resultCode == 11) {//11表示成功登陆
+                    startActivityForResult(Intent(this, ChooseCellActivity::class.java), ACTION_CHOOSE_BY_COMMUNITY)
+                }
+            }
+            ACTION_CHOOSE_BY_COMMUNITY -> {
+                if (resultCode == 51) {//51表示选择了小区
+                    setRadioButtonChecked(3)
+                    setFloatIconsVisible(3)
+                }
             }
         }
     }

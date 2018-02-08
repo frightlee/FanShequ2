@@ -112,7 +112,7 @@ class OrderListActivity : AppCompatActivity() {
             return orderList.size
         }
 
-        private class ViewHolder(view: View) {
+        inner class ViewHolder(view: View) {
             @ViewInject(R.id.tv_item_order_number)
             var number: TextView? = null
             @ViewInject(R.id.tv_item_order_time)
