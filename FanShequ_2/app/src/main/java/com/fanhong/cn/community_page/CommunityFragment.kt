@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.fanhong.cn.App
 import com.fanhong.cn.R
+import com.fanhong.cn.community_page.ChatRoomActivity
 import com.fanhong.cn.community_page.NewsDetailsActivity
 import com.fanhong.cn.community_page.subsidiary.CommunityNewsAdapter
 import com.fanhong.cn.community_page.subsidiary.CommunityNewsBean
@@ -46,7 +47,7 @@ class CommunityFragment : Fragment() {
 
         btn_joinChat.setOnClickListener {
             //打开社区群聊
-
+            startActivity(Intent(activity, ChatRoomActivity::class.java))
         }
 
         adapterComm = CommunityNewsAdapter(activity, listComm)
@@ -68,6 +69,7 @@ class CommunityFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         top_extra.text = pref?.getString(App.PrefNames.GARDENNAME, "")
+        top_extra.requestFocus()
         anim?.start()
         initNewsData()
     }

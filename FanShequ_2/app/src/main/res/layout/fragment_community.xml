@@ -9,7 +9,6 @@
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="100px"
-        android:layout_alignParentTop="true"
         android:background="@color/skyblue">
 
         <com.zhy.autolayout.AutoLinearLayout
@@ -48,22 +47,24 @@
 
         </com.zhy.autolayout.AutoLinearLayout>
 
-
         <TextView
             android:id="@+id/top_extra"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="200px"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20px"
+            android:layout_marginRight="20px"
             android:layout_toRightOf="@id/rg_title_community"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:gravity="right|center_vertical"
-            android:marqueeRepeatLimit="marquee_forever"
+            android:marqueeRepeatLimit="-1"
             android:padding="10px"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="32px" />
+            android:textSize="30px" />
+
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <com.zhy.autolayout.AutoRelativeLayout
