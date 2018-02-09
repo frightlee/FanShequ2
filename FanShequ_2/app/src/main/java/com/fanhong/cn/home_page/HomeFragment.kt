@@ -72,10 +72,10 @@ class HomeFragment : Fragment() {
                     i.putExtra("name", mSharedPref!!.getString(App.PrefNames.GARDENNAME, ""))
                     startActivity(i)
                 }else{
-                    DialogUtil.showDialog(activity,"chooseCell",110)
+                    DialogUtil.showDialog(activity,"chooseCell", HomeActivity.ACTION_CHOOSE_BY_COMMUNITY)
                 }
             } else {
-                DialogUtil.showDialog(activity,"login",100)
+                DialogUtil.showDialog(activity,"login", HomeActivity.ACTION_LOGIN_BY_COMMUNITY)
             }
         }
         tv_zhaoshang_daili.setOnClickListener {

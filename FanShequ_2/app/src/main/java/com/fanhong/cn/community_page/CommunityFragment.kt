@@ -144,6 +144,5 @@ class CommunityFragment : Fragment() {
         news_fail.visibility = View.VISIBLE
         progressBar_community.visibility = View.GONE
         anim?.stop()
-        ToastUtil.showToastL("加载失败！")
     }
 }
