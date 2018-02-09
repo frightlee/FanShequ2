@@ -41,14 +41,14 @@ class ChatRoomActivity : AppCompatActivity() {
         img_back.setOnClickListener { finish() }
 
         initBaseData()
-//        connectRongIM(token, roomId)
-//        btn_msg_send.setOnClickListener(sendListener)
+        connectRongIM(token, roomId)
+        btn_msg_send.setOnClickListener(sendListener)
 
         optimizeViews()
     }
 
     private fun initBaseData() {
-        pref = getSharedPreferences("Setting", Context.MODE_PRIVATE)
+        pref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         token = pref!!.getString(App.PrefNames.TOKEN, "")
         roomId = pref!!.getString(App.PrefNames.GARDENID, "")
         tv_chat_title.text = pref!!.getString(App.PrefNames.GARDENNAME, "")
@@ -152,7 +152,7 @@ class ChatRoomActivity : AppCompatActivity() {
      */
     private fun initConversation() {
         mMessagelist.clear()
-        mMessagelist.add(CommunityMessageBean("assets://images/systmsghead.png", pref!!.getString("gardenName", "帆社区"),
+        mMessagelist.add(CommunityMessageBean("assets://images/systmsghead.png", pref!!.getString(App.PrefNames.GARDENNAME, "帆社区"),
                 "欢迎加入我们的聊天室", System.currentTimeMillis(), CommunityMessageBean.TYPE_LEFT))
         updateListTime()
         adapter = CommunityChatAdapter(this, mMessagelist)
