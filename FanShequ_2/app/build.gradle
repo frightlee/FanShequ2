@@ -54,7 +54,7 @@ dependencies {
     //图片选择器
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
     //agentweb
-    //    compile 'com.just.agentweb:agentweb:1.0.3'
+    compile 'com.just.agentweb:agentweb:1.0.3'
     //高德定位
     compile 'com.amap.api:location:latest.integration'
     implementation project(':imlib')

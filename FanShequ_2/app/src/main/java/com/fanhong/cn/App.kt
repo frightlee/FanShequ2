@@ -4,6 +4,7 @@ import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.support.v4.content.ContextCompat
 import cn.finalteam.galleryfinal.CoreConfig
 import cn.finalteam.galleryfinal.FunctionConfig
 import cn.finalteam.galleryfinal.GalleryFinal
@@ -26,6 +27,11 @@ class App : Application() {
         val UPDATE_CHECK = "http://m.wuyebest.com/index.php/App/index/appnumber"//更新检查访问路径
         val APP_DOWNLOAD = "http://m.wuyebest.com/public/apk/FanShequ.apk"//app下载路径
         val HEAD_UPLOAD = "http://m.wuyebest.com/index.php/App/index/newupapp"//头像上传路径
+
+        //开门禁所需访问的路径
+        val OPEN_URL = "http://m.wuyebest.com/index.php/App/index/yjkm"
+        //开门禁结果查询路径
+        val CHECK_URL = "http://m.wuyebest.com/index.php/App/index/yjkmcx"
 
         var lastCodeMsgTime = 0L
 
@@ -58,9 +64,9 @@ class App : Application() {
         x.Ext.init(this)
 
         val theme = ThemeConfig.Builder()
-                .setTitleBarBgColor(resources.getColor(R.color.skyblue))
-                .setCheckSelectedColor(resources.getColor(R.color.skyblue))
-                .setCropControlColor(resources.getColor(R.color.skyblue))
+                .setTitleBarBgColor(ContextCompat.getColor(this,R.color.skyblue))
+                .setCheckSelectedColor(ContextCompat.getColor(this,R.color.skyblue))
+                .setCropControlColor(ContextCompat.getColor(this,R.color.skyblue))
                 .setIconCamera(R.mipmap.camera)
                 .build()
         val functionCfg = FunctionConfig.Builder()
