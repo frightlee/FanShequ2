@@ -49,6 +49,9 @@ dependencies {
     compile 'com.zhy:autolayout:1.4.5'
     //xutils 3
     compile 'org.xutils:xutils:3.5.0'
+    //banner
+    compile 'com.xiwenhec:banner:1.0.4'
+    //JPush
     compile 'cn.jiguang.sdk:jpush:3.1.1'
     compile 'cn.jiguang.sdk:jcore:1.1.9'
     //图片选择器

@@ -50,7 +50,7 @@
         <activity android:name=".home_page.fenxiao.JoiningActivity" />
         <activity android:name=".home_page.fenxiao.PostSuccessActivity" />
         <activity android:name=".community_page.NewsDetailsActivity" />
-        <activity android:name=".community_page.ChatRoomActivity"/>
+        <activity android:name=".community_page.ChatRoomActivity" />
         <activity android:name=".user_page.BasicSettingsActivity" />
         <activity android:name=".user_page.AboutActivity" />
         <activity android:name=".user_page.AccountSetsActivity" />
@@ -64,6 +64,8 @@
         <activity android:name=".user_page.shippingaddress.AddAddressActivity" />
         <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
         <activity android:name=".user_page.shippingaddress.EditAddressActivity" />
+        <activity android:name="com.fanhong.cn.service_page.shop.ShopIndexActivity" />
+        <activity android:name="com.fanhong.cn.service_page.shop.GoodsDetailsActivity"/>
 
         <!-- android6.0拍照权限调取 -->
         <provider
