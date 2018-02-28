@@ -264,6 +264,7 @@
                             佣金金额=实际门的数量*50元/门</string>
     <string name="little_tip">请保持手机24小时畅通，稍后会有客服人员与你核对资料</string>
 
+
     <!--门禁申请-->
     <string name="postmessages">上传资料</string>
     <string name="checkidentity">身份验证</string>
@@ -308,4 +309,13 @@
     <string name="url_gongwuyuan">http://www.offcn.com</string>
     <string name="url_zhichen">http://www.mycnvip.com</string>
     <string name="url_muying">http://www.yaolan.com</string>
+
+    <string name="dami">大米</string>
+    <string name="you">食用油</string>
+    <string name="mian">面食</string>
+    <string name="jiu">酒水</string>
+    <string name="goods_details">商品详情</string>
+    <string name="addToCar">加入购物车</string>
+    <!---->
+
 </resources>

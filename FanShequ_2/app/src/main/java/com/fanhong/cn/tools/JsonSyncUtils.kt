@@ -1,6 +1,7 @@
 package com.fanhong.cn.tools
 
 import com.fanhong.cn.community_page.subsidiary.CommunityNewsBean
+import com.fanhong.cn.service_page.shop.GoodsListFragment
 import com.fanhong.cn.user_page.OrderDetailsActivity
 import com.fanhong.cn.user_page.OrderListActivity
 import org.json.JSONArray
@@ -93,6 +94,27 @@ object JsonSyncUtils {
                         val name = it.optString("goods")
                         val price = it.optString("zjje")
                         OrderListActivity.MyOrder(id, number, name, price, time)
+                    }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+
+        return list
+    }
+    @Synchronized
+    fun getGoodsList(data: String): MutableList<GoodsListFragment.GoodsInfo> {
+        val list: MutableList<GoodsListFragment.GoodsInfo> = ArrayList()
+        try {
+            val jsonArray = JSONArray(data)
+            (0 until jsonArray.length())
+                    .map { jsonArray.optJSONObject(it) }
+                    .mapTo(list) {
+                        val id = it.optString("id")
+                        val name = it.optString("name")
+                        val pic = it.optString("logo")
+                        val content = it.optString("describe")
+                        val price = it.optString("jg")
+                        GoodsListFragment.GoodsInfo(id, name, pic, content, price)
                     }
         } catch (e: JSONException) {
             e.printStackTrace()

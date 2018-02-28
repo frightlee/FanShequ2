@@ -12,6 +12,9 @@
     <color name="red">#ff0000</color>
     <color name="lightred">#ff4d4d</color>
     <color name="warnred">#ff4b4b</color>
+    <color name="yellow">#FFC125</color>
+    <color name="orange">#FF7200</color>
+    <color name="orange2">#ffa358</color>
 
     <color name="bg1">#efefef</color>
     <color name="bg2">#f5f5f5</color>
@@ -29,4 +32,5 @@
     <color name="radioback">#7fd4ff</color>
     <color name ="title_rb_bg_color">#C0EAFF</color>
     <color name="title_select_color">#26B2FF</color>
+    <color name="green">#1DB509</color>
 </resources>

@@ -17,6 +17,7 @@ import com.fanhong.cn.HomeActivity
 import com.fanhong.cn.R
 import com.fanhong.cn.home_page.fenxiao.HaveJoinedActivity
 import com.fanhong.cn.home_page.fenxiao.ZSIntroductionActivity
+import com.fanhong.cn.service_page.shop.ShopIndexActivity
 import com.fanhong.cn.tools.DialogUtil
 import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.tools.ToastUtil
@@ -86,6 +87,7 @@ class HomeFragment : Fragment() {
                 startActivity(Intent(activity, ZSIntroductionActivity::class.java))
             }
         }
+        tv_store.setOnClickListener { startActivity(Intent(activity,ShopIndexActivity::class.java)) }
     }
 
     private fun getNotification() {

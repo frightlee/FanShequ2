@@ -28,4 +28,9 @@
     <style name="my_checkbox_selector" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:button">@drawable/setdefault_checkbox_selector</item>
     </style>
+
+    <style name="myProgressBarStyleLarge">
+        　　
+        <item name="android:indeterminateDrawable">@drawable/progress_large_white</item>
+    </style>
 </resources>
