@@ -1,17 +1,31 @@
 package com.fanhong.cn.home_page
 
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.OrientationHelper
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.fanhong.cn.AgentwebActivity
+import com.fanhong.cn.App
 import com.fanhong.cn.R
+import com.fanhong.cn.home_page.fenxiao.HaveJoinedActivity
+import com.fanhong.cn.home_page.fenxiao.ZSIntroductionActivity
 import com.fanhong.cn.service_page.MyServiceAdapter
+import com.fanhong.cn.service_page.usedshop.UsedShopActivity
+import com.fanhong.cn.tools.JsonSyncUtils
+import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.fragment_service.*
+import org.xutils.common.Callback
+import org.xutils.http.RequestParams
+import org.xutils.x
 
 
 /**
@@ -55,11 +69,13 @@ class ServiceFragment : Fragment() {
     }
 
     private var adapter: MyServiceAdapter? = null
+    private var mSharedPref: SharedPreferences? = null
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.fragment_service, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        mSharedPref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         img_back.visibility = View.GONE
         tv_title.text = "社区服务"
         initViews()
@@ -71,7 +87,7 @@ class ServiceFragment : Fragment() {
         adapter!!.setItemClick(object : MyServiceAdapter.ItemClick {
             override fun itemclick(position: Int) {
                 //便民服务的点击事件
-
+                convenientService(position)
             }
 
         })
@@ -82,7 +98,12 @@ class ServiceFragment : Fragment() {
         adapter!!.setItemClick(object : MyServiceAdapter.ItemClick {
             override fun itemclick(position: Int) {
                 //衣食住行的点击事件
-
+                var url = activity.getString(mUrlArray2[position])
+                var title = activity.getString(mTextviewArray2[position])
+                var intent = Intent(activity, AgentwebActivity::class.java)
+                intent.putExtra("url", url)
+                intent.putExtra("title", title)
+                startActivity(intent)
             }
 
         })
@@ -93,11 +114,73 @@ class ServiceFragment : Fragment() {
         adapter!!.setItemClick(object : MyServiceAdapter.ItemClick {
             override fun itemclick(position: Int) {
                 //教育医疗的点击事件
-
+                var url = activity.getString(mUrlArray3[position])
+                var title = activity.getString(mTextviewArray3[position])
+                var intent = Intent(activity, AgentwebActivity::class.java)
+                intent.putExtra("url", url)
+                intent.putExtra("title", title)
+                startActivity(intent)
             }
 
         })
         recycle3.adapter = adapter
         recycle3.layoutManager = GridLayoutManager(activity, 4)
+    }
+
+    private fun convenientService(position: Int) {
+        when (position) {
+            0 -> {
+            }
+            1 -> startActivity(Intent(activity, UsedShopActivity::class.java))
+            2 -> {
+            }
+            3 -> {
+                if (isLogined()) {
+                    var uid = mSharedPref!!.getString(App.PrefNames.USERID, "-1")
+                    checkJoined(uid)
+                } else {
+                    startActivity(Intent(activity, ZSIntroductionActivity::class.java))
+                }
+            }
+            4 -> {
+            }
+            5 -> {
+            }
+        }
+    }
+
+    private fun isLogined(): Boolean {
+        return mSharedPref!!.getString(App.PrefNames.USERID, "-1") != "-1"
+    }
+
+    private fun choosedCell(): Boolean {
+        return !TextUtils.isEmpty(mSharedPref!!.getString(App.PrefNames.GARDENNAME, ""))
+    }
+
+    private fun checkJoined(uid: String) {
+        var params = RequestParams(App.CMD)
+        params.addBodyParameter("cmd", "69")
+        params.addBodyParameter("uid", uid)
+        x.http().post(params, object : Callback.CommonCallback<String> {
+            override fun onFinished() {
+            }
+
+            override fun onSuccess(result: String?) {
+                var data = JsonSyncUtils.getJsonValue(result!!, "data").toInt()
+                when (data) {
+                    0 -> startActivity(Intent(activity, ZSIntroductionActivity::class.java))
+                    1 -> startActivity(Intent(activity, HaveJoinedActivity::class.java))
+                    else -> ToastUtil.showToastS("登录状态异常")
+                }
+            }
+
+            override fun onCancelled(cex: Callback.CancelledException?) {
+            }
+
+            override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                ToastUtil.showToastS("登录状态异常")
+            }
+
+        })
     }
 }

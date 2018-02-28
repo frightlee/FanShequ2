@@ -1,15 +1,8 @@
 package com.fanhong.cn.tools
 
-import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
 import android.graphics.BitmapFactory
-import android.os.Environment
 import java.io.*
-
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 object FileUtil {
     /**

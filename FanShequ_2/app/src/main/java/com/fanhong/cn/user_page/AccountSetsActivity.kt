@@ -95,7 +95,7 @@ class AccountSetsActivity : AppCompatActivity() {
             useCamera()
         }).setOnChoosePic(View.OnClickListener {
             popupWindow.dismiss()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 // 权限是否已经 授权 GRANTED---授权  DINIED---拒绝
                 if (ContextCompat.checkSelfPermission(this@AccountSetsActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_TAKE_PHOTO)
@@ -221,7 +221,9 @@ class AccountSetsActivity : AppCompatActivity() {
                 override fun onSuccess(result: String) {
                     val cw = JsonSyncUtils.getJsonValue(result, "cw")
                     if (cw == "0") {
-                        img_head.setImageBitmap(photo)
+                        var option = ImageOptions.Builder().setCircular(true).build()
+                        x.image().bind(img_head,file.path.toString(),option)
+//                        img_head.setImageBitmap(photo)
                         ToastUtil.showToastL("修改成功！")
                         val token = JsonSyncUtils.getJsonValue(result, "token")
                         val headUrl = JsonSyncUtils.getJsonValue(result, "logo")
