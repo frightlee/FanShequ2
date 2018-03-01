@@ -268,5 +268,6 @@
     <string name="jiu">酒水</string>
     <string name="goods_details">商品详情</string>
     <string name="addToCar">加入购物车</string>
+    <string name="discuss">用户评论</string>
     <!---->
 </resources>
