@@ -28,7 +28,9 @@
     <color name="text_6">#666666</color>
     <color name="text_9">#999999</color>
     <color name="alpha_33">#33000000</color>
+    <color name="gray">#c0c0c0</color>
 
+    <color name="radioback">#7fd4ff</color>
     <color name ="title_rb_bg_color">#C0EAFF</color>
     <color name="title_select_color">#26B2FF</color>
     <color name="green">#1DB509</color>

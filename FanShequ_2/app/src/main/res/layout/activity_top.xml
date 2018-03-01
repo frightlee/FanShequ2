@@ -36,5 +36,5 @@
         android:text="extra"
         android:textColor="@color/white"
         android:textSize="36px"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 </com.zhy.autolayout.AutoRelativeLayout>
