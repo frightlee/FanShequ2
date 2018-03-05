@@ -4,7 +4,9 @@ import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Environment
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import cn.finalteam.galleryfinal.CoreConfig
 import cn.finalteam.galleryfinal.FunctionConfig
 import cn.finalteam.galleryfinal.GalleryFinal
@@ -14,6 +16,10 @@ import io.rong.imlib.RongIMClient
 
 import org.xutils.x
 import java.util.HashSet
+import org.xutils.DbManager
+import org.xutils.db.table.TableEntity
+import java.io.File
+
 
 /**
  * Created by Administrator on 2017/12/26.
@@ -22,6 +28,7 @@ import java.util.HashSet
 class App : Application() {
     companion object {
         val PREFERENCES_NAME = "mSettings"  //全局缓存统一名称
+        val DB_NAME = "mSettings"  //全局数据库统一名称
         val WEB_SITE = "http://m.wuyebest.com"
         val CMD = "http://m.wuyebest.com/index.php/App/index"//数据接口统一访问路径
         val UPDATE_CHECK = "http://m.wuyebest.com/index.php/App/index/appnumber"//更新检查访问路径
@@ -36,13 +43,26 @@ class App : Application() {
         var lastCodeMsgTime = 0L
 
         var old_msg_times: MutableSet<Long> = HashSet()
+
+
+        var daoConfig: DbManager.DaoConfig = DbManager.DaoConfig()
+                .setDbName(DB_NAME)
+                .setDbDir(File(Environment.getExternalStorageDirectory().path))
+                .setDbVersion(1)
+                .setDbOpenListener { db ->
+                    // 开启WAL, 对写入加速提升巨大
+                    db.database.enableWriteAheadLogging()
+                }
+                .setDbUpgradeListener { _, _, _ -> }
+                .setTableCreateListener { _, table -> Log.i("JAVA", "onTableCreated：" + table.name) }
+                .setAllowTransaction(true)
+        var db = x.getDb(daoConfig)
     }
 
     /**
      *全局缓存数据键集
      */
     object PrefNames {
-
         val UPDATEIGNORE = "checkDate"//忽略更新日期 String
         val FIRST_START = "first_start"  //首次登录检测 Boolean
         val USERNAME = "Name"  //用户名 String
@@ -108,4 +128,6 @@ class App : Application() {
         }
         return null
     }
+
+
 }

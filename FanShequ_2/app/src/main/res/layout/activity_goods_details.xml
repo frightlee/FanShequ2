@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_parent"
     android:background="@color/bg1"
     tools:context=".service_page.shop.GoodsDetailsActivity">
 
@@ -32,7 +33,7 @@
             android:textColor="@color/white"
             android:textSize="40px" />
 
-        <Button
+        <ImageView
             android:id="@+id/btn_shopCar"
             android:layout_width="55px"
             android:layout_height="55px"
@@ -54,11 +55,12 @@
             android:paddingRight="1px"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="18px"
+            android:textSize="9sp"
             android:visibility="visible" />
     </com.zhy.autolayout.AutoRelativeLayout>
 
     <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_below="@id/top_layout"
         android:layout_height="wrap_content">
@@ -72,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="400px"
                 android:background="@color/white"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/img_default" />
 
             <com.zhy.autolayout.AutoLinearLayout
@@ -148,6 +151,7 @@
 
                 <com.zhy.autolayout.AutoLinearLayout
                     android:layout_width="wrap_content"
+                    android:id="@+id/layout_addCar"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:gravity="center_vertical">
@@ -267,7 +271,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/top_layout"
         android:background="@color/bg1"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ProgressBar
             style="@style/myProgressBarStyleLarge"
