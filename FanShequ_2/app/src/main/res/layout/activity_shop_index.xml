@@ -32,7 +32,7 @@
             android:textColor="@color/white"
             android:textSize="40px" />
 
-        <Button
+        <ImageView
             android:id="@+id/btn_shopCar"
             android:layout_width="55px"
             android:layout_height="55px"
@@ -45,16 +45,16 @@
         <TextView
             android:id="@+id/tv_car_count"
             android:layout_width="wrap_content"
-            android:layout_height="30px"
+            android:layout_height="15dp"
             android:layout_alignRight="@id/btn_shopCar"
             android:layout_alignTop="@id/btn_shopCar"
             android:background="@drawable/btn_radius_red"
             android:gravity="center"
-            android:minWidth="30px"
+            android:minWidth="15dp"
             android:paddingRight="1px"
             android:text="0"
             android:textColor="@color/white"
-            android:textSize="18px"
+            android:textSize="9sp"
             android:visibility="invisible" />
     </com.zhy.autolayout.AutoRelativeLayout>
 

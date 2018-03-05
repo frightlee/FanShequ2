@@ -24,16 +24,14 @@ import org.xutils.x
 
 
 class GoodsListFragment() : Fragment() {
-    private var type: Int = 0
+    internal var type: Int = 0
 
     fun setType(type: Int): GoodsListFragment {
         this.type = type
         return this
     }
 
-    companion object {
-        private val goods: MutableList<GoodsInfo> = ArrayList()
-    }
+    internal val goods: MutableList<GoodsInfo> = ArrayList()
 
     private var adapter: GoodsAdapter? = null
 
@@ -43,7 +41,7 @@ class GoodsListFragment() : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = GoodsAdapter(activity)
+        adapter = GoodsAdapter(activity, goods)
         lv_goods_list.adapter = adapter
         goods.clear()
         getData()
@@ -51,6 +49,7 @@ class GoodsListFragment() : Fragment() {
             goods.clear()
             getData()
         }
+
     }
 
     private fun getData() {
@@ -93,7 +92,7 @@ class GoodsListFragment() : Fragment() {
 
     data class GoodsInfo(val id: String, val name: String, val pic: String, val content: String, val price: String)
 
-    class GoodsAdapter(val context: Context) : BaseAdapter() {
+    class GoodsAdapter(val context: Context, val goods: MutableList<GoodsInfo>) : BaseAdapter() {
         private val option = ImageOptions.Builder().setUseMemCache(true).setFailureDrawableId(R.mipmap.img_default).setFailureDrawableId(R.mipmap.img_default).build()
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             val holder: ViewHolder?
