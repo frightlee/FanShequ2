@@ -25,12 +25,12 @@ import org.xutils.x
 class AddAddressActivity : AppCompatActivity() {
 
     private var checked = 0
-    private var mSharedPref:SharedPreferences?=null
+    private var mSharedPref: SharedPreferences? = null
 
-    private var cellNames: MutableList<String>? = ArrayList()
-    private var cellIds: MutableList<String>? = ArrayList()
-    private var louNames: MutableList<String>? = ArrayList()
-    private var louIds: MutableList<String>? = ArrayList()
+    private var cellNames: MutableList<String> = ArrayList()
+    private var cellIds: MutableList<String> = ArrayList()
+    private var louNames: MutableList<String> = ArrayList()
+    private var louIds: MutableList<String> = ArrayList()
     private var ssp: SpinerPopWindow<String>? = null
 
     private var cellId: String? = null
@@ -49,27 +49,27 @@ class AddAddressActivity : AppCompatActivity() {
         top_extra.visibility = View.VISIBLE
 
         top_extra.setOnClickListener {
-            if(input_name_edt.text.trim().isEmpty()){
+            if (input_name_edt.text.trim().isEmpty()) {
                 ToastUtil.showToastS("请输入姓名！")
                 return@setOnClickListener
             }
-            if(input_phone_edt.text.trim().isEmpty()){
+            if (input_phone_edt.text.trim().isEmpty()) {
                 ToastUtil.showToastS("请输入联系电话！")
                 return@setOnClickListener
             }
-            if(!StringUtils.validPhoneNum("2",input_phone_edt.text.toString().trim())){
+            if (!StringUtils.validPhoneNum("2", input_phone_edt.text.toString().trim())) {
                 ToastUtil.showToastS("请输入正确的电话号码！")
                 return@setOnClickListener
             }
-            if(TextUtils.isEmpty(cellId)){
+            if (TextUtils.isEmpty(cellId)) {
                 ToastUtil.showToastS("请选择小区！")
                 return@setOnClickListener
             }
-            if(TextUtils.isEmpty(louId)){
+            if (TextUtils.isEmpty(louId)) {
                 ToastUtil.showToastS("请选择楼栋！")
                 return@setOnClickListener
             }
-            if(input_address_edt.text.trim().isEmpty()){
+            if (input_address_edt.text.trim().isEmpty()) {
                 ToastUtil.showToastS("请输入详细地址！")
                 return@setOnClickListener
             }
@@ -81,16 +81,15 @@ class AddAddressActivity : AppCompatActivity() {
         address_choosecell.setOnClickListener {
             getCells()
         }
-        address_chooselou.setOnClickListener{
-            ssp = SpinerPopWindow(this@AddAddressActivity,louNames!!, AdapterView.OnItemClickListener {
-                parent, view, position, id ->
+        address_chooselou.setOnClickListener {
+            ssp = SpinerPopWindow(this@AddAddressActivity, louNames!!, AdapterView.OnItemClickListener { parent, view, position, id ->
                 address_chooselou.text = louNames!![position]
                 louId = louIds!![position]
-                setEnableds(true,true,false)
+                setEnableds(true, true, false)
                 ssp!!.dismiss()
-            },"")
+            }, "")
             ssp!!.width = address_chooselou.width
-            ssp!!.showAsDropDown(address_chooselou,0,0)
+            ssp!!.showAsDropDown(address_chooselou, 0, 0)
         }
 
         input_address_edt.addTextChangedListener(object : TextWatcher {
@@ -137,7 +136,7 @@ class AddAddressActivity : AppCompatActivity() {
                     ssp = SpinerPopWindow(this@AddAddressActivity, cellNames!!, AdapterView.OnItemClickListener { parent, view, position, id ->
                         address_choosecell.text = cellNames!![position]
                         cellId = cellIds!![position]
-                        setEnableds(true,true,false)
+                        setEnableds(true, true, false)
                         ssp!!.dismiss()
                         address_chooselou.setText(R.string.chooselou)
                         louId = ""
@@ -156,21 +155,22 @@ class AddAddressActivity : AppCompatActivity() {
 
         })
     }
-    private fun getLous(){
+
+    private fun getLous() {
         louNames!!.clear()
         louIds!!.clear()
         var params = RequestParams(App.CMD)
-        params.addBodyParameter("cmd","1001")
-        params.addBodyParameter("xid",cellId)
-        x.http().post(params,object :Callback.CommonCallback<String>{
+        params.addBodyParameter("cmd", "1001")
+        params.addBodyParameter("xid", cellId)
+        x.http().post(params, object : Callback.CommonCallback<String> {
             override fun onFinished() {
             }
 
             override fun onSuccess(result: String?) {
-                if (JsonSyncUtils.getJsonValue(result!!,"state")=="200"){
-                    var data = JsonSyncUtils.getJsonValue(result!!,"data")
-                    louNames = JsonSyncUtils.getStringList(data!!,"bname")
-                    louIds = JsonSyncUtils.getStringList(data!!,"id")
+                if (JsonSyncUtils.getJsonValue(result!!, "state") == "200") {
+                    var data = JsonSyncUtils.getJsonValue(result!!, "data")
+                    louNames = JsonSyncUtils.getStringList(data!!, "bname")
+                    louIds = JsonSyncUtils.getStringList(data!!, "id")
                 }
             }
 
@@ -183,29 +183,29 @@ class AddAddressActivity : AppCompatActivity() {
         })
     }
 
-    private fun addNewAddress(){
-        mSharedPref = getSharedPreferences(App.PREFERENCES_NAME,Context.MODE_PRIVATE)
+    private fun addNewAddress() {
+        mSharedPref = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         var params = RequestParams(App.CMD)
         params.addParameter("cmd", "59")
-        params.addParameter("uid", mSharedPref!!.getString(App.PrefNames.USERID,"-1"))
+        params.addParameter("uid", mSharedPref!!.getString(App.PrefNames.USERID, "-1"))
         params.addParameter("mr", checked)
         params.addParameter("xid", cellId)
         params.addParameter("ldh", louId)
         params.addParameter("dizhi", input_address_edt.text.toString())
         params.addParameter("dh", input_phone_edt.text.toString())
         params.addParameter("name", input_name_edt.text.toString())
-        x.http().post(params,object :Callback.CommonCallback<String>{
+        x.http().post(params, object : Callback.CommonCallback<String> {
             override fun onFinished() {
             }
 
             override fun onSuccess(result: String?) {
-                var cw = JsonSyncUtils.getJsonValue(result!!,"cw")
-                when(cw){
-                    "0"->{
+                var cw = JsonSyncUtils.getJsonValue(result!!, "cw")
+                when (cw) {
+                    "0" -> {
                         ToastUtil.showToastS("添加成功！")
                         this@AddAddressActivity.finish()
                     }
-                    else->ToastUtil.showToastS("添加失败，请重试！")
+                    else -> ToastUtil.showToastS("添加失败，请重试！")
                 }
             }
 

@@ -37,13 +37,35 @@ class SelectgoodsFragment : Fragment() {
         return inflater!!.inflate(R.layout.fragment_select_usedgoods, container, false)
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        list = ArrayList()
+        adapter = UsedgoodsAdapter(activity, list!!)
+        adapter!!.setCallSeller(object : UsedgoodsAdapter.CallSeller {
+            override fun onCall(phone: String) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE), 100)
+                        var msg = handler.obtainMessage(15, phone)
+                        handler.sendMessage(msg)
+                        return
+                    }
+                }
+                callNumber(phone)
+            }
+
+        })
+        used_goods_list.adapter = adapter
+    }
+
     override fun onResume() {
         super.onResume()
+        list!!.clear()
         getDatas()
     }
 
     private fun getDatas() {
-        list = ArrayList()
+
         var params = RequestParams(App.CMD)
         params.addBodyParameter("cmd", "33")
         x.http().post(params, object : Callback.CommonCallback<String> {
@@ -65,22 +87,6 @@ class SelectgoodsFragment : Fragment() {
                                         it.optString("id"), it.optString("jg"))
                                 list!!.add(model)
                             }
-                    adapter = UsedgoodsAdapter(activity, list!!)
-                    adapter!!.setCallSeller(object : UsedgoodsAdapter.CallSeller {
-                        override fun onCall(phone: String) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                                    ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.CALL_PHONE), 100)
-                                    var msg = handler.obtainMessage(15, phone)
-                                    handler.sendMessage(msg)
-                                    return
-                                }
-                            }
-                            callNumber(phone)
-                        }
-
-                    })
-                    used_goods_list.adapter = adapter
                     handler.sendEmptyMessage(11)
                 } else {
                     handler.sendEmptyMessage(12)

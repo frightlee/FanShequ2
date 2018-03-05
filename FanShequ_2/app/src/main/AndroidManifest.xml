@@ -64,13 +64,11 @@
         <activity android:name=".user_page.shippingaddress.AddAddressActivity" />
         <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
         <activity android:name=".user_page.shippingaddress.EditAddressActivity" />
-
         <activity android:name=".home_page.expressage.ExpressMainActivity" />
         <activity android:name=".door_page.SubmitDoorActivity" />
         <activity android:name=".door_page.AddKeyActivity" />
-
         <activity android:name=".service_page.shop.ShopIndexActivity" />
-        <activity android:name=".service_page.shop.GoodsDetailsActivity"/>
+        <activity android:name=".service_page.shop.GoodsDetailsActivity" />
 
         <!-- android6.0拍照权限调取 -->
         <provider
@@ -106,7 +104,8 @@
 
         <activity android:name=".AgentwebActivity" />
         <activity android:name=".service_page.usedshop.UsedShopActivity" />
-        <activity android:name=".service_page.usedshop.MypostgoodsActivity"/>
+        <activity android:name=".service_page.usedshop.MypostgoodsActivity" />
+        <activity android:name=".service_page.party.PartyMainActivity"></activity>
     </application>
 
 </manifest>
