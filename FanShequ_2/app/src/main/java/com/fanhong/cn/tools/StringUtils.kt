@@ -65,7 +65,7 @@ object StringUtils {
     }
 
     fun isEmpty(str: String?): Boolean {
-        return if (null == str || str.length == 0 || str === "" || str == "") true else false
+        return null == str || str.length == 0 || str === "" || str == ""
     }
 
     /********************* 格式验证  */

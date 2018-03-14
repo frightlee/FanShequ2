@@ -114,7 +114,7 @@ class GoodsListFragment() : Fragment() {
             view.setOnClickListener {
                 val intent = Intent(context, GoodsDetailsActivity::class.java)
                 intent.putExtra("id", data.id)
-                intent.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT)
+                intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                 context.startActivity(intent)
             }
             return view

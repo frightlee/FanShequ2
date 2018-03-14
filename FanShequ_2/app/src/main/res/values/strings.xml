@@ -215,6 +215,7 @@
     <string name="aboutour">关于我们</string>
     <string name="notify_msg">消息提醒</string>
     <string name="addaddress">添加地址</string>
+    <string name="chooseaddress">选择地址</string>
     <string name="edtaddress">修改地址</string>
     <string name="control">管理</string>
     <string name="finish">完成</string>
@@ -317,6 +318,8 @@
     <string name="goods_details">商品详情</string>
     <string name="addToCar">加入购物车</string>
     <string name="discuss">用户评论</string>
+    <string name="total">合计：</string>
+    <string name="mathNow">立即结算</string>
     <!---->
 
 </resources>

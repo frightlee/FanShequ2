@@ -1,5 +1,6 @@
 package com.fanhong.cn.service_page.shop
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.Drawable
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.fanhong.cn.App
 import com.fanhong.cn.R
+import com.fanhong.cn.login_pages.LoginActivity
 import com.fanhong.cn.tools.JsonSyncUtils
 import com.zhy.autolayout.AutoRelativeLayout
 import com.zhy.autolayout.utils.AutoUtils
@@ -30,7 +32,7 @@ import java.util.*
 
 class GoodsDetailsActivity : AppCompatActivity() {
 
-    private var id = "-1"
+    private var gid = "-1"
     private val discusses: MutableList<DiscussInfo> = ArrayList()
     private var adapter: DiscussAdapter? = null
     private var goods = GoodsCarTable()
@@ -39,8 +41,9 @@ class GoodsDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_goods_details)
         img_back.setOnClickListener { finish() }
-        id = intent.getStringExtra("id")
-        goods.id = id
+        gid = intent.getStringExtra("id")
+        goods.gid = gid//商品ID
+        goods.uid = getUid()//用户ID
         countBox.minSize = 1
         countBox.maxSize = 100
         countBox.onCountChange { count, oldCount ->
@@ -50,7 +53,6 @@ class GoodsDetailsActivity : AppCompatActivity() {
         goods.count = countBox.count
 
         getGoods()
-        checkCar()
 
         adapter = DiscussAdapter(this, discusses)
         lv_discuss.adapter = adapter
@@ -76,19 +78,54 @@ class GoodsDetailsActivity : AppCompatActivity() {
         }
 
         layout_addCar.setOnClickListener {
+            if (!isLoged()) {
+                AlertDialog.Builder(this).setMessage("请先登录！").setPositiveButton("立即登录", { _, _ ->
+                    startActivity(Intent(this@GoodsDetailsActivity, LoginActivity::class.java))
+                }).setNegativeButton("取消", null).show()
+                return@setOnClickListener
+            }
             showAddAnim()
             addToCar()
         }
         btn_buyNow.setOnClickListener {
+            if (!isLoged()) {
+                AlertDialog.Builder(this).setMessage("请先登录！").setPositiveButton("立即登录", { _, _ ->
+                    startActivity(Intent(this@GoodsDetailsActivity, LoginActivity::class.java))
+                }).setNegativeButton("取消", null).show()
+                return@setOnClickListener
+            }
             val intent = Intent(this, OrderConfirmActivity::class.java)
+            intent.putExtra("from", "goods")
             intent.putExtra("goods", goods)
+            intent.putExtra("total", countBox.count * goods.price.toFloat())
             startActivity(intent)
         }
         btn_shopCar.setOnClickListener {
-            if (!isCarEmpty())
-                startActivity(Intent(this, ShopCarActivity::class.java))
+            if (!isLoged()) {
+                AlertDialog.Builder(this).setMessage("请先登录！").setPositiveButton("立即登录", { _, _ ->
+                    startActivity(Intent(this@GoodsDetailsActivity, LoginActivity::class.java))
+                }).setNegativeButton("取消", null).show()
+                return@setOnClickListener
+            }
+            if (!isCarEmpty()) {
+                val i = Intent(this, ShopCarActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                startActivity(i)
+            }
         }
         tv_car_count.setOnClickListener { btn_shopCar.callOnClick() }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        gid = intent?.getStringExtra("id") ?: gid
+        goods.gid = gid//商品ID
+        getGoods()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkCar()
     }
 
     private fun showAddAnim() {
@@ -125,16 +162,19 @@ class GoodsDetailsActivity : AppCompatActivity() {
         point.startAnimation(anims)
     }
 
+    private fun isLoged(): Boolean = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.USERID, "-1") != "-1"
+
     private fun checkCar() {
-        val existGoods = App.db.selector(GoodsCarTable::class.java).findAll()
-        val count = existGoods.sumBy { it.count }
+        val existGoods = App.db.selector(GoodsCarTable::class.java).where("c_uid", "=", getUid()).findAll()
+        val count = existGoods?.size ?: 0
         tv_car_count.text = count.toString()
-        if (count != 0 && tv_car_count.visibility == View.INVISIBLE)
+        if (count != 0)
             tv_car_count.visibility = View.VISIBLE
+        else tv_car_count.visibility = View.INVISIBLE
     }
 
     private fun addToCar() {
-        var existGoods = App.db.selector(GoodsCarTable::class.java).where("c_id", "=", id).findFirst()
+        var existGoods = App.db.selector(GoodsCarTable::class.java).where("c_id", "=", gid).and("c_uid", "=", getUid()).findFirst()
         if (null == existGoods) {
             existGoods = goods
             App.db.save(existGoods)
@@ -147,17 +187,19 @@ class GoodsDetailsActivity : AppCompatActivity() {
             App.db.saveOrUpdate(existGoods)
         }
         Log.e("TestLog", "newGoods:$existGoods")
-//        existGoods = App.db.selector(GoodsCarTable::class.java).where("c_id", "=", id).findFirst()
+//        existGoods = App.db.selector(GoodsCarTable::class.java).where("c_id", "=", gid).findFirst()
 //        Log.e("TestLog","savedGoods:$existGoods")
     }
 
-    private fun isCarEmpty() = null == App.db.selector(GoodsCarTable::class.java).findFirst()
+    private fun getUid(): String = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.USERID, "-1")
+
+    private fun isCarEmpty() = null == App.db.selector(GoodsCarTable::class.java).where("c_uid", "=", getUid()).findFirst()
 
     private fun refreshDiscuss(page: Int) {
         discusses.clear()
         val param = RequestParams(App.CMD)
         param.addBodyParameter("cmd", "1011")
-        param.addBodyParameter("id", id)
+        param.addBodyParameter("id", gid)
         param.addBodyParameter("page", "$page")
         x.http().post(param, object : Callback.CommonCallback<String> {
             override fun onSuccess(result: String) {
@@ -187,7 +229,7 @@ class GoodsDetailsActivity : AppCompatActivity() {
     private fun getGoods() {
         val param = RequestParams(App.CMD)
         param.addBodyParameter("cmd", "1010")
-        param.addBodyParameter("id", id)
+        param.addBodyParameter("id", gid)
         param.connectTimeout = 5000
         x.http().post(param, object : Callback.CommonCallback<String> {
             override fun onSuccess(result: String) {

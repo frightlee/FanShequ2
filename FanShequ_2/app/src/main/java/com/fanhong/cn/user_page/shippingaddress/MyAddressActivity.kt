@@ -23,6 +23,7 @@ import java.io.Serializable
 class MyAddressActivity : AppCompatActivity() {
 
     private var status: Int = 0
+    private var isNeedResult: Boolean = false
     private var mSharedPref: SharedPreferences? = null
 
     private var list: MutableList<AddressModel>? = ArrayList()
@@ -121,7 +122,7 @@ class MyAddressActivity : AppCompatActivity() {
                                             adapter!!.notifyDataSetChanged()
                                             ToastUtil.showToastS("删除成功！")
                                         }
-                                        else->ToastUtil.showToastS("删除失败，请重试！")
+                                        else -> ToastUtil.showToastS("删除失败，请重试！")
                                     }
                                 }
 
@@ -133,18 +134,30 @@ class MyAddressActivity : AppCompatActivity() {
 
                             })
                         }
-                        .setNegativeButton("取消",null)
+                        .setNegativeButton("取消", null)
                         .show()
             }
 
             override fun edtAddress(model: AddressModel) {
-                var intent = Intent(this@MyAddressActivity,EditAddressActivity::class.java)
-                intent.putExtra("content",model)
+                var intent = Intent(this@MyAddressActivity, EditAddressActivity::class.java)
+                intent.putExtra("content", model)
                 startActivity(intent)
             }
 
         })
         address_list.adapter = adapter
+
+        isNeedResult = intent.getBooleanExtra("result", false)
+        address_list.setOnItemClickListener { _, _, position, _ ->
+            if (isNeedResult) {
+                val addr = list!![position]
+                val i = Intent()
+                i.putExtra("addrId", addr.adrid)
+                i.putExtra("addrName", addr.address)
+                setResult(101, i)
+                finish()
+            }
+        }
     }
 
     override fun onResume() {

@@ -3,7 +3,6 @@ package com.fanhong.cn
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Environment
 import android.support.v4.content.ContextCompat
 import android.util.Log
@@ -13,12 +12,10 @@ import cn.finalteam.galleryfinal.GalleryFinal
 import cn.finalteam.galleryfinal.ThemeConfig
 import com.fanhong.cn.tools.XImageLoader
 import io.rong.imlib.RongIMClient
-
-import org.xutils.x
-import java.util.HashSet
 import org.xutils.DbManager
-import org.xutils.db.table.TableEntity
+import org.xutils.x
 import java.io.File
+import java.util.*
 
 
 /**
@@ -79,14 +76,47 @@ class App : Application() {
         val LASTMONTH = "fx_last_month" //                      月份
     }
 
+    /**
+     * 支付相关参数
+     */
+    object PayConfig {
+        /**
+         * AliPay支付宝
+         */
+        //APPID
+        val alipay_APPID = "2017082508372012"
+        //商户收款账号
+        val alipay_SELLER = "18725732573@139.com"
+        // 支付宝公钥
+        val alipay_RSA_PUBLIC = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdHlve2U3JjPDeXv+30PkA5pCkwtdPOodAHF6qCXwcyeS7/BVtx9GVbZhdI+inOY2oJI4ll3METeGmeGw99962V7YkAJu7+r9SVpDdoXz1jo8zATq/vVi7mCRSxhsfPmJ3YZfZUSWOf/ECfrkh6t+LROvBIa8VHhyaoLp5/zbCyFhFdfyk4/EWee+McNxtnehVlMknvjm6rCQ1A2Eyy+NyryA/nShclJL6wr5l/N4tSaH5dsSBHexoGXswE+5JQ6J+GQ/hNpiU4bUWLVDRd5OsnqYsS4xSqmVVwGG4Ts3xO1/skNORAFQ7DYMti1U8uxu1z5tPUljqbpYCWB3N8BOQIDAQAB"
+        // 支付宝私钥
+        var alipay_RSA_PRIVATE = ""
+        //后台回调通知地址
+        val alipay_SERVICE_CALLBACK = "http://m.wuyebest.com/library/zhifubao/notify_url.php"
+
+        /**
+         * 微信
+         */
+        //appid 微信分配的app应用ID
+        val WX_APPID = "wxea49e10e35c4b1ea"
+        //商户号——微信分配的公众账号ID
+        val WX_MCH_ID = "1488497082"
+        //支付回调广播
+        val WX_ACTION_RESULT = "com.fanhong.cn.wxapi.PAY_RESULT"
+        //服务器回调接口
+        val WX_notifyUrl = ""// 用于微信支付成功的回调（后台已设置）
+        //下单签名接口
+        val WX_getOrderUrl = "http://m.wuyebest.com/public/newWeiPay/index.php"
+    }
+
     override fun onCreate() {
         super.onCreate()
         x.Ext.init(this)
 
         val theme = ThemeConfig.Builder()
-                .setTitleBarBgColor(ContextCompat.getColor(this,R.color.skyblue))
-                .setCheckSelectedColor(ContextCompat.getColor(this,R.color.skyblue))
-                .setCropControlColor(ContextCompat.getColor(this,R.color.skyblue))
+                .setTitleBarBgColor(ContextCompat.getColor(this, R.color.skyblue))
+                .setCheckSelectedColor(ContextCompat.getColor(this, R.color.skyblue))
+                .setCropControlColor(ContextCompat.getColor(this, R.color.skyblue))
                 .setIconCamera(R.mipmap.camera)
                 .build()
         val functionCfg = FunctionConfig.Builder()

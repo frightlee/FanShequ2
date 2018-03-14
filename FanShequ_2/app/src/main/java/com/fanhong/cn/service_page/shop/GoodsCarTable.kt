@@ -8,9 +8,13 @@ import java.io.Serializable
  * Created by Administrator on 2018/3/1.
  */
 @Table(name = "goods_car", onCreated = "")
-class GoodsCarTable() :Serializable{
-    @Column(name = "c_id",isId = true,autoGen = false)
-    var id: String = ""
+class GoodsCarTable() : Serializable {
+    @Column(name = "id", isId = true, autoGen = true)
+    var id: Int = 0
+    @Column(name = "c_uid", isId = false, autoGen = false)
+    var uid: String = ""
+    @Column(name = "c_id", isId = false, autoGen = false)
+    var gid: String = ""
     @Column(name = "c_name")
     var name: String = ""
     @Column(name = "c_logo")
@@ -23,9 +27,11 @@ class GoodsCarTable() :Serializable{
     var unit: String = ""
     @Column(name = "c_count")
     var count: Int = 0
+    @Column(name = "c_select")
+    var select: Boolean = false
 
-    constructor(id: String, name: String, logo: String, content: String, price: String, unit: String, count: Int) : this() {
-        this.id = id
+    constructor(gid: String, name: String, logo: String, content: String, price: String, unit: String, count: Int) : this() {
+        this.gid = gid
         this.name = name
         this.logo = logo
         this.content = content
@@ -35,6 +41,6 @@ class GoodsCarTable() :Serializable{
     }
 
     override fun toString(): String {
-        return "{id = $id, name = $name, logo = $logo, content = $content, price = $price, unit = $unit, count = $count}"
+        return "{gid = $gid, name = $name, logo = $logo, content = $content, price = $price, unit = $unit, count = $count}"
     }
 }

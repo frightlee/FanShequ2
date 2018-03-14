@@ -1,11 +1,13 @@
 package com.fanhong.cn.service_page.shop
 
+import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -13,8 +15,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import com.fanhong.cn.App
 import com.fanhong.cn.R
+import com.fanhong.cn.login_pages.LoginActivity
 import kotlinx.android.synthetic.main.activity_shop_index.*
-import java.util.ArrayList
+import java.util.*
 
 class ShopIndexActivity : AppCompatActivity() {
     private val icons = intArrayOf(R.mipmap.icon_rice, R.mipmap.icon_oil, R.mipmap.icon_nol, R.mipmap.winner)
@@ -37,8 +40,18 @@ class ShopIndexActivity : AppCompatActivity() {
     private fun initViews() {
         img_back.setOnClickListener { finish() }
         btn_shopCar.setOnClickListener {
-            if (!isCarEmpty())
-                startActivity(Intent(this, ShopCarActivity::class.java))
+            if ("-1" == getUid()) {
+                AlertDialog.Builder(this).setMessage("请先登录！").setPositiveButton("立即登录", { _, _ ->
+                    startActivity(Intent(this@ShopIndexActivity, LoginActivity::class.java))
+                }).setNegativeButton("取消", null).show()
+                return@setOnClickListener
+            }
+            if (!isCarEmpty()) {
+                val i = Intent(this, ShopCarActivity::class.java)
+                i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+                startActivity(i)
+            }
+//            App.db.dropTable(GoodsCarTable::class.java)
         }
         tv_car_count.setOnClickListener { btn_shopCar.callOnClick() }
 
@@ -68,13 +81,15 @@ class ShopIndexActivity : AppCompatActivity() {
         checkCar()
     }
 
-    private fun isCarEmpty() = null == App.db.selector(GoodsCarTable::class.java).findFirst()
+    private fun getUid(): String = getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(App.PrefNames.USERID, "-1")
+    private fun isCarEmpty() = null == App.db.selector(GoodsCarTable::class.java).where("c_uid", "=", getUid()).findFirst()
     private fun checkCar() {
-        val existGoods = App.db.selector(GoodsCarTable::class.java).findAll()
-        val count = existGoods.sumBy { it.count }
+        val existGoods = App.db.selector(GoodsCarTable::class.java).where("c_uid", "=", getUid()).findAll()
+        val count = existGoods?.size ?: 0
         tv_car_count.text = count.toString()
-        if (count != 0 && tv_car_count.visibility == View.INVISIBLE)
+        if (count != 0)
             tv_car_count.visibility = View.VISIBLE
+        else tv_car_count.visibility = View.INVISIBLE
     }
 
     private fun addPages() {
