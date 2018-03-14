@@ -18,6 +18,7 @@ import com.fanhong.cn.R
 import com.fanhong.cn.home_page.fenxiao.HaveJoinedActivity
 import com.fanhong.cn.home_page.fenxiao.ZSIntroductionActivity
 import com.fanhong.cn.service_page.MyServiceAdapter
+import com.fanhong.cn.service_page.shop.ShopIndexActivity
 import com.fanhong.cn.service_page.usedshop.UsedShopActivity
 import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.tools.ToastUtil
@@ -129,8 +130,7 @@ class ServiceFragment : Fragment() {
 
     private fun convenientService(position: Int) {
         when (position) {
-            0 -> {
-            }
+            0 -> startActivity(Intent(activity, ShopIndexActivity::class.java))
             1 -> startActivity(Intent(activity, UsedShopActivity::class.java))
             2 -> {
             }

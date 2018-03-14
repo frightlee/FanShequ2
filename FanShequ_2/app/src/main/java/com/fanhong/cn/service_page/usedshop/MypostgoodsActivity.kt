@@ -22,12 +22,33 @@ class MypostgoodsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mypostgoods)
-        getDatas()
         initViews()
+        list = ArrayList()
+        adapter = MygoodsAdapter(this@MypostgoodsActivity, list!!)
+        adapter!!.setDelete(object : MygoodsAdapter.Delete {
+            override fun remove(id: String, position: Int) {
+
+                var builder = AlertDialog.Builder(this@MypostgoodsActivity)
+                builder.setTitle("删除卖品")
+                        .setMessage("是否确认删除？")
+                        .setPositiveButton("确认"){
+                            _,_-> deleteData(id, position)
+                        }
+                        .setNegativeButton("取消",null)
+                        .show()
+            }
+
+        })
+        my_goods_list.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        list?.clear()
+        getDatas()
     }
 
     private fun getDatas() {
-        list = ArrayList()
         var uid = getSharedPreferences(App.PREFERENCES_NAME,Context.MODE_PRIVATE).getString(App.PrefNames.USERID,"-1")
         var params = RequestParams(App.CMD)
         params.addBodyParameter("cmd", "35")
@@ -49,23 +70,7 @@ class MypostgoodsActivity : AppCompatActivity() {
                                     it.optString("id"), it.optString("jg"))
                             list!!.add(model)
                         }
-                adapter = MygoodsAdapter(this@MypostgoodsActivity, list!!)
-                adapter!!.setDelete(object : MygoodsAdapter.Delete {
-                    override fun remove(id: String, position: Int) {
-
-                        var builder = AlertDialog.Builder(this@MypostgoodsActivity)
-                        builder.setTitle("删除卖品")
-                                .setMessage("是否确认删除？")
-                                .setPositiveButton("确认"){
-                                    _,_-> deleteData(id, position)
-                                }
-                                .setNegativeButton("取消",null)
-                                .show()
-                    }
-
-                })
-                my_goods_list.adapter = adapter
-                adapter!!.notifyDataSetChanged()
+                adapter?.notifyDataSetChanged()
             }
 
             override fun onCancelled(cex: Callback.CancelledException?) {

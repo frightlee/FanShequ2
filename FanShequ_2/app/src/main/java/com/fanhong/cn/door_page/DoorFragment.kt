@@ -51,9 +51,10 @@ class DoorFragment : Fragment() {
         mSharedPref = activity.getSharedPreferences(App.PREFERENCES_NAME, Context.MODE_PRIVATE)
         tv_title.text = "门禁钥匙"
         img_back.setImageResource(R.mipmap.refresh)
+        var size = (activity.windowManager.defaultDisplay.width.toFloat()) / 720
         var params = img_back.layoutParams
-        params.height = 52
-        params.width = 52
+        params.height = (53 * size).toInt()
+        params.width = (53 * size).toInt()
         img_back.layoutParams = params
 //        img_back.setPadding(10,10,10,10)
         img_back.setOnClickListener { refreshKeys() }
@@ -66,17 +67,17 @@ class DoorFragment : Fragment() {
 
     private fun openDoor(key: String) {
         var params = RequestParams(App.OPEN_URL)
-        params.addBodyParameter("key",key)
-        x.http().post(params,object :Callback.CommonCallback<String>{
+        params.addBodyParameter("key", key)
+        x.http().post(params, object : Callback.CommonCallback<String> {
             override fun onFinished() {
             }
 
             override fun onSuccess(result: String?) {
-                if(JsonSyncUtils.getJsonValue(result!!,"error")=="succ"){
-                    val s = JsonSyncUtils.getJsonValue(result!!,"data")
-                    val uuid = JsonSyncUtils.getJsonValue(s,"cmd_uuid")
+                if (JsonSyncUtils.getJsonValue(result!!, "error") == "succ") {
+                    val s = JsonSyncUtils.getJsonValue(result!!, "data")
+                    val uuid = JsonSyncUtils.getJsonValue(s, "cmd_uuid")
                     Log.i(TAG, s + "..." + uuid)
-                    Handler().postDelayed({ checkOpen(uuid) },3000)
+                    Handler().postDelayed({ checkOpen(uuid) }, 3000)
                 }
             }
 
@@ -174,8 +175,8 @@ class DoorFragment : Fragment() {
                     } else {
                         handler.sendEmptyMessage(113)
                     }
-                    Log.i(TAG,"datamap==>"+datamap!!.toString())
-                    Log.i(TAG,"grouplist==>"+groupList!!.toString())
+                    Log.i(TAG, "datamap==>" + datamap!!.toString())
+                    Log.i(TAG, "grouplist==>" + groupList!!.toString())
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -195,7 +196,7 @@ class DoorFragment : Fragment() {
      */
     private fun addKeys() {
 //        ToastUtil.showToastL("refresh clicked")
-        startActivity(Intent(activity,AddKeyActivity::class.java))
+        startActivity(Intent(activity, AddKeyActivity::class.java))
     }
 
     /**

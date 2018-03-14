@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <include layout="@layout/activity_top"/>
+
+    <include layout="@layout/activity_top" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -110,10 +111,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15px"
+                    android:ems="5"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:background="@drawable/biankuang_shape"
                     android:drawablePadding="5px"
                     android:drawableRight="@mipmap/lion_xiala"
-                    android:padding="5px"
+                    android:padding="10px"
                     android:text="@string/choosegarden"
                     android:textColor="@color/text_6"
                     android:textSize="30px" />
@@ -125,18 +129,23 @@
                     android:layout_marginLeft="20px"
                     android:background="@drawable/biankuang_shape"
                     android:drawablePadding="5px"
+                    android:ems="5"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:drawableRight="@mipmap/lion_xiala"
-                    android:padding="5px"
+                    android:padding="10px"
+                    android:enabled="false"
                     android:text="@string/chooselou"
                     android:textColor="@color/text_6"
                     android:textSize="30px" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10px"
                     android:text="*"
                     android:textColor="@color/red"
-                    android:textSize="30px"
-                    android:layout_marginLeft="10px"/>
+                    android:textSize="30px" />
             </com.zhy.autolayout.AutoLinearLayout>
 
             <TextView
@@ -153,69 +162,69 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5px"
                 android:padding="20px"
+                android:text="@string/discribe"
                 android:textColor="@color/text_9"
-                android:textSize="25px"
-                android:text="@string/discribe" />
+                android:textSize="25px" />
 
             <com.zhy.autolayout.AutoLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20px"
-                android:layout_marginRight="20px"
-                android:layout_marginBottom="30px"
-                android:orientation="horizontal">
+                android:layout_marginLeft="28px"
+                android:layout_marginRight="28px"
+                android:layout_marginTop="28px"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:background="@color/white">
 
                 <ImageView
-                    android:id="@+id/key_img1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5px"
-                    android:layout_marginLeft="20px"
-                    android:layout_marginRight="20px"
-                    android:layout_marginTop="5px"
-                    android:layout_weight="1"
-                    android:src="@mipmap/btn_add_img" />
+                    android:id="@+id/img_key1"
+                    android:layout_width="160px"
+                    android:layout_height="160px"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/key_img2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5px"
-                    android:layout_marginLeft="20px"
-                    android:layout_marginRight="20px"
-                    android:layout_marginTop="5px"
-                    android:layout_weight="1"
-                    android:src="@mipmap/btn_add_img"
-                    android:visibility="invisible"/>
+                    android:id="@+id/img_key2"
+                    android:layout_width="160px"
+                    android:layout_height="160px"
+                    android:layout_marginLeft="8px"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
 
                 <ImageView
-                    android:id="@+id/key_img3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5px"
-                    android:layout_marginLeft="20px"
-                    android:layout_marginRight="20px"
-                    android:layout_marginTop="5px"
-                    android:layout_weight="1"
-                    android:src="@mipmap/btn_add_img"
-                    android:visibility="invisible"/>
+                    android:id="@+id/img_key3"
+                    android:layout_width="160px"
+                    android:layout_height="160px"
+                    android:layout_marginLeft="8px"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/img_key_add"
+                    android:layout_width="160px"
+                    android:layout_height="160px"
+                    android:background="@drawable/selector_comment_choose_bg"
+                    android:clickable="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/icon_choose_pic" />
+
             </com.zhy.autolayout.AutoLinearLayout>
 
-            <include layout="@layout/agree_sheets"/>
+            <include layout="@layout/agree_sheets" />
 
             <Button
                 android:id="@+id/key_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/postbtn_dianji"
-                android:layout_marginTop="20px"
                 android:layout_marginLeft="30px"
                 android:layout_marginRight="30px"
-                android:paddingTop="10px"
+                android:layout_marginTop="20px"
+                android:background="@drawable/postbtn_dianji"
                 android:paddingBottom="10px"
+                android:paddingTop="10px"
                 android:text="提 交"
                 android:textColor="@color/white"
-                android:textSize="38px"/>
+                android:textSize="38px" />
         </com.zhy.autolayout.AutoLinearLayout>
     </ScrollView>
 </com.zhy.autolayout.AutoLinearLayout>
