@@ -1,12 +1,14 @@
 package com.fanhong.cn.door_page
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
@@ -19,13 +21,16 @@ import cn.finalteam.galleryfinal.model.PhotoInfo
 import com.fanhong.cn.App
 import com.fanhong.cn.R
 import com.fanhong.cn.myviews.SpinerPopWindow
+import com.fanhong.cn.tools.FileUtil
 import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.activity_add_key.*
 import kotlinx.android.synthetic.main.activity_top.*
 import kotlinx.android.synthetic.main.agree_sheets.*
 import org.xutils.common.Callback
+import org.xutils.common.util.KeyValue
 import org.xutils.http.RequestParams
+import org.xutils.http.body.MultipartBody
 import org.xutils.x
 import java.io.File
 
@@ -91,6 +96,7 @@ class AddKeyActivity : AppCompatActivity() {
                             }
                             ssp!!.dismiss()
                         }, "")
+                        ssp?.width = key_choosegarden.width
                         ssp?.showAsDropDown(key_choosegarden)
                     }
                 }
@@ -117,11 +123,12 @@ class AddKeyActivity : AppCompatActivity() {
                         buildingList = JsonSyncUtils.getStringList(data!!, "bname")
                         buildingIdList = JsonSyncUtils.getStringList(data!!, "id")
 
-                        ssp = SpinerPopWindow(this@AddKeyActivity, cellList!!, AdapterView.OnItemClickListener { parent, view, position, id ->
+                        ssp = SpinerPopWindow(this@AddKeyActivity, buildingList!!, AdapterView.OnItemClickListener { parent, view, position, id ->
                             key_choosebuilding.text = buildingList!![position]
                             buildingId = buildingIdList!![position]
                             ssp!!.dismiss()
                         }, "")
+                        ssp?.width = key_choosebuilding.width
                         ssp?.showAsDropDown(key_choosebuilding)
                     }
                 }
@@ -172,14 +179,48 @@ class AddKeyActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             //压缩图片
+            val kvList: MutableList<KeyValue> = ArrayList()
+            kvList.add(KeyValue("cmd","1012"))
+            kvList.add(KeyValue("uid",uid))
+            kvList.add(KeyValue("xid",cellId))
+            kvList.add(KeyValue("dizhi",buildingId))
+            var filenames = ""
+            for (i in 0 until selectedFiles.size) {
+                val dir = File("${Environment.getExternalStorageDirectory()}/Fanshequ")
+                if (!dir.exists())
+                    dir.mkdir()
+                val fileName = "${System.currentTimeMillis()}${(Math.random() * 99999).toInt()}_$i.jpg"
+                val file: File = FileUtil.compressImage(selectedFiles[i], "${Environment.getExternalStorageDirectory()}/Fanshequ/$fileName")
+                kvList.add(KeyValue("touxiang${i+1}", file))
+                if (i != 0) filenames += ","
+                filenames += fileName
+            }
+            kvList.add(KeyValue("xinxi", filenames))
 
-            var params = RequestParams(App.CMD)
-            params.addBodyParameter("cmd","1012")
-            params.addBodyParameter("uid",uid)
-            params.addBodyParameter("xid",cellId)
-            params.addBodyParameter("dizhi",buildingId)
-            params.addBodyParameter("touxiang","")
+            val params = RequestParams(App.CMD)
+            params.requestBody = MultipartBody(kvList,"UTF-8")
             params.isMultipart = true
+            x.http().post(params,object :Callback.CommonCallback<String>{
+                override fun onSuccess(result: String) {
+                    when(JsonSyncUtils.getState(result)){
+                        200->{
+                            AlertDialog.Builder(this@AddKeyActivity).setMessage("上传成功！").setPositiveButton("确定",null).show()
+                            finish()
+                        }
+                        400->ToastUtil.showToastL("上传失败，请重试")
+                    }
+                }
+
+                override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                    ToastUtil.showToastL("连接服务器失败，请检查网络！")
+                }
+
+                override fun onCancelled(cex: Callback.CancelledException?) {
+                }
+
+                override fun onFinished() {
+                }
+            })
         }
     }
 

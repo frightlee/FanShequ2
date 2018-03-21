@@ -318,8 +318,8 @@ class OrderConfirmActivity : AppCompatActivity() {
         content += ",\"timeout_express\":\"${minutes}m\""//订单超时时间
 //        content += ",\"goods_type\":\"1\""//商品主类型：0—虚拟类商品，1—实物类商品 注：虚拟类商品不支持使用花呗渠道
 //        content += ",\"enable_pay_channels\":\"pcredit,balance,moneyFund,debitCardExpress\""//可用渠道，用户只能在指定渠道范围内支付
-//        content += ",\"total_amount\":\"$total\""//订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]
-        content += ",\"total_amount\":\"" + 0.01 + "\""
+        content += ",\"total_amount\":\"$total\""//订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]
+//        content += ",\"total_amount\":\"" + 0.01 + "\""
         content += ",\"product_code\":\"" + "QUICK_MSECURITY_PAY" + "\""//销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
         return content + "}"
         //        "{" +"\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"" + getOutTradeNo() + "\"}");
@@ -451,7 +451,7 @@ class OrderConfirmActivity : AppCompatActivity() {
                     -1 -> payFailure()
                     -2 -> payOrderCancel()
                 }
-                this@OrderConfirmActivity.unregisterReceiver(wxReciver)
+//                this@OrderConfirmActivity.unregisterReceiver(wxReciver)
                 btn_commit.isEnabled = true
             }
         }

@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -65,17 +66,25 @@
         <activity android:name=".user_page.shippingaddress.AddAddressActivity" />
         <activity android:name=".user_page.shippingaddress.MyAddressActivity" />
         <activity android:name=".user_page.shippingaddress.EditAddressActivity" />
-        <activity android:name=".home_page.expressage.ExpressMainActivity" />
         <activity android:name=".door_page.SubmitDoorActivity" />
         <activity android:name=".door_page.AddKeyActivity" />
         <activity android:name=".service_page.shop.ShopIndexActivity" />
         <activity android:name=".service_page.shop.GoodsDetailsActivity" />
-
+        <activity android:name=".service_page.shop.ShopCarActivity" />
+        <activity android:name=".service_page.shop.OrderConfirmActivity" />
         <activity android:name=".service_page.usedshop.UsedShopActivity" />
         <activity android:name=".service_page.usedshop.MypostgoodsActivity" />
-        <activity android:name=".service_page.shop.ShopCarActivity" />
-        <activity android:name=".service_page.shop.OrderConfirmActivity"/>
-            <activity android:name=".service_page.party.PartyMainActivity"/>
+        <activity android:name=".service_page.government.GovernMainActivity" />
+        <activity android:name=".service_page.repair.RepairSuccessActivity" />
+        <activity android:name=".service_page.repair.RepairActivity" />
+        <activity android:name=".service_page.government.AddFxActivity" />
+        <activity android:name=".service_page.government.DetailsActivity" />
+        <activity android:name=".service_page.government.PersonalMessageActivity" />
+        <activity android:name=".service_page.government.GovMemberInfoActivity" />
+        <activity android:name=".service_page.government.GovDuesActivity" />
+        <activity android:name=".service_page.verification.VerificationActivity" />
+        <activity android:name=".service_page.verification.CarFormConfirmActivity" />
+        <activity android:name=".service_page.express.ExpressHomeActivity" />
 
         <!-- android6.0拍照权限调取 -->
         <provider
@@ -115,18 +124,31 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+            android:windowSoftInputMode="adjustResize|stateHidden" />
         <!-- 微信支付回调入口 -->
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:launchMode="singleTop" />
+
+        <!-- 高德sdk -->
+        <service android:name="com.amap.api.location.APSService" />
+
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="536071745ff0a51f664b5cdb2c789ba6" />
+
+        <activity android:name=".service_page.express.SendExpressActivity" />
+        <activity android:name=".service_page.express.CheckExpressActivity" />
+        <activity android:name=".service_page.express.ExpressOrderActivity" />
+        <activity android:name=".service_page.express.NetphoneActivity" />
+        <activity android:name=".service_page.express.ChooseExpressActivity"></activity>
     </application>
 
 </manifest>

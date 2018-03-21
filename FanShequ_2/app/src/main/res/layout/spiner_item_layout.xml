@@ -16,7 +16,7 @@
         android:paddingTop="7px"
         android:paddingBottom="7px"
         android:text="2017年"
-        android:textColor="@color/textnormal"
+        android:textColor="@color/text_6"
         android:textSize="28px"/>
 
 </com.zhy.autolayout.AutoLinearLayout>

@@ -41,10 +41,11 @@ class App : Application() {
 
         var old_msg_times: MutableSet<Long> = HashSet()
 
-
+val  sqpath = /*Environment.getExternalStorageDirectory().path+*/"/data/data/com.fanhong.cn/database"
+//        Log.e("TestLog",sqpath)
         var daoConfig: DbManager.DaoConfig = DbManager.DaoConfig()
                 .setDbName(DB_NAME)
-                .setDbDir(File(Environment.getExternalStorageDirectory().path))
+                .setDbDir(File(sqpath))
                 .setDbVersion(1)
                 .setDbOpenListener { db ->
                     // 开启WAL, 对写入加速提升巨大
@@ -74,6 +75,7 @@ class App : Application() {
 
         val LASTYEAR = "fx_last_year" //招商代理查询缓存最后一个年份
         val LASTMONTH = "fx_last_month" //                      月份
+        val SHAREDRAFT = "gov_share_draft" //党功能分享草稿
     }
 
     /**
@@ -91,8 +93,10 @@ class App : Application() {
         val alipay_RSA_PUBLIC = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApdHlve2U3JjPDeXv+30PkA5pCkwtdPOodAHF6qCXwcyeS7/BVtx9GVbZhdI+inOY2oJI4ll3METeGmeGw99962V7YkAJu7+r9SVpDdoXz1jo8zATq/vVi7mCRSxhsfPmJ3YZfZUSWOf/ECfrkh6t+LROvBIa8VHhyaoLp5/zbCyFhFdfyk4/EWee+McNxtnehVlMknvjm6rCQ1A2Eyy+NyryA/nShclJL6wr5l/N4tSaH5dsSBHexoGXswE+5JQ6J+GQ/hNpiU4bUWLVDRd5OsnqYsS4xSqmVVwGG4Ts3xO1/skNORAFQ7DYMti1U8uxu1z5tPUljqbpYCWB3N8BOQIDAQAB"
         // 支付宝私钥
         var alipay_RSA_PRIVATE = ""
-        //后台回调通知地址
+        //后台回调通知地址(商城)
         val alipay_SERVICE_CALLBACK = "http://m.wuyebest.com/library/zhifubao/notify_url.php"
+        //后台回调通知地址(车审)
+        val alipay_SERVICE_CALLBACK1 = "http://m.wuyebest.com/library/zhifubao/notify.php"
 
         /**
          * 微信
@@ -105,8 +109,10 @@ class App : Application() {
         val WX_ACTION_RESULT = "com.fanhong.cn.wxapi.PAY_RESULT"
         //服务器回调接口
         val WX_notifyUrl = ""// 用于微信支付成功的回调（后台已设置）
-        //下单签名接口
+        //商城下单签名接口
         val WX_getOrderUrl = "http://m.wuyebest.com/public/newWeiPay/index.php"
+        //车审下单签名接口
+        val WX_getOrderUrl1 = "http://m.wuyebest.com/public/WeiPay/index.php"
     }
 
     override fun onCreate() {

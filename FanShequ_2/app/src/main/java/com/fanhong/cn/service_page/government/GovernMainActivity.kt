@@ -1,4 +1,4 @@
-package com.fanhong.cn.service_page.party
+package com.fanhong.cn.service_page.government
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -6,18 +6,19 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
-import android.widget.RadioGroup
 import com.fanhong.cn.R
-import kotlinx.android.synthetic.main.activity_party_main.*
+import kotlinx.android.synthetic.main.activity_government_main.*
 import kotlinx.android.synthetic.main.activity_top.*
 
-class PartyMainActivity : AppCompatActivity() {
+class GovernMainActivity : AppCompatActivity() {
 
     var fragments: MutableList<Fragment>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_party_main)
+        setContentView(R.layout.activity_government_main)
+        tv_title.text = "分享"
+        img_back.setOnClickListener { finish() }
         initFragments()
         var adapter = object : FragmentPagerAdapter(supportFragmentManager) {
             override fun getItem(position: Int): Fragment {
@@ -62,7 +63,7 @@ class PartyMainActivity : AppCompatActivity() {
         }
     }
 
-    fun initFragments() {
+    private fun initFragments() {
         fragments = ArrayList()
         fragments!!.add(SharedFragment())
         fragments!!.add(ForumFragment())

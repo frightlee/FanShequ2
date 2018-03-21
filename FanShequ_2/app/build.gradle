@@ -91,6 +91,11 @@ dependencies {
     compile 'com.just.agentweb:agentweb:1.0.3'
     //高德定位
     compile 'com.amap.api:location:latest.integration'
+    //3D地图
+    compile 'com.amap.api:3dmap:latest.integration'
+    //2D地图
+    compile 'com.amap.api:map2d:latest.integration'
+    //rongCloud融云
     implementation project(':imlib')
     //微信支付
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'

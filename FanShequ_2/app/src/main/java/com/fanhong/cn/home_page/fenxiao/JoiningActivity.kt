@@ -96,7 +96,9 @@ class JoiningActivity : AppCompatActivity() {
 
             override fun onSuccess(result: String?) {
                 if (JsonSyncUtils.getJsonValue(result!!,"cw") == "0"){
-                    startActivity(Intent(this@JoiningActivity,PostSuccessActivity::class.java))
+                    val intent = Intent(this@JoiningActivity,PostSuccessActivity::class.java)
+                    intent.putExtra("from", "Express")
+                    startActivity(intent)
                 }else{
                     ToastUtil.showToastS("提交失败，请重试")
                 }

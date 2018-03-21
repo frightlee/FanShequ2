@@ -12,7 +12,7 @@
         android:layout_marginLeft="20px"
         android:checked="true"
         android:text="@string/agree"
-        android:textColor="@color/textnormal"
+        android:textColor="@color/text_6"
         android:textSize="28px" />
 
     <TextView

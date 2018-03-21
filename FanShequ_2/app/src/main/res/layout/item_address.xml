@@ -41,7 +41,7 @@
             android:layout_below="@id/whose_address"
             android:layout_marginTop="25px"
             android:text="大渡口区天安数码城2栋1803"
-            android:textColor="@color/textnormal"
+            android:textColor="@color/text_6"
             android:textSize="30px" />
 
         <ImageView

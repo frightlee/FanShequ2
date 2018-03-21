@@ -1,6 +1,7 @@
 package com.fanhong.cn.home_page
 
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -17,9 +18,13 @@ import com.fanhong.cn.App
 import com.fanhong.cn.R
 import com.fanhong.cn.home_page.fenxiao.HaveJoinedActivity
 import com.fanhong.cn.home_page.fenxiao.ZSIntroductionActivity
+import com.fanhong.cn.login_pages.LoginActivity
 import com.fanhong.cn.service_page.MyServiceAdapter
+import com.fanhong.cn.service_page.government.GovernMainActivity
+import com.fanhong.cn.service_page.repair.RepairActivity
 import com.fanhong.cn.service_page.shop.ShopIndexActivity
 import com.fanhong.cn.service_page.usedshop.UsedShopActivity
+import com.fanhong.cn.service_page.verification.VerificationActivity
 import com.fanhong.cn.tools.JsonSyncUtils
 import com.fanhong.cn.tools.ToastUtil
 import kotlinx.android.synthetic.main.activity_top.*
@@ -132,7 +137,7 @@ class ServiceFragment : Fragment() {
         when (position) {
             0 -> startActivity(Intent(activity, ShopIndexActivity::class.java))
             1 -> startActivity(Intent(activity, UsedShopActivity::class.java))
-            2 -> {
+            2 -> {startActivity(Intent(activity,VerificationActivity::class.java))
             }
             3 -> {
                 if (isLogined()) {
@@ -143,8 +148,36 @@ class ServiceFragment : Fragment() {
                 }
             }
             4 -> {
+                if (isLogined()) {
+                    startActivity(Intent(activity, RepairActivity::class.java))
+                } else AlertDialog.Builder(activity).setTitle("你还没有登录哦").setMessage("是否立即登录？").setPositiveButton("确认", { _, _ ->
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }).setNegativeButton("取消", null).show()
             }
             5 -> {
+                if (isLogined()) {
+                    val param = RequestParams(App.CMD)
+                    param.addBodyParameter("cmd", "93")
+                    param.addBodyParameter("tel", mSharedPref!!.getString(App.PrefNames.USERNAME,""))
+                    x.http().post(param, object : Callback.CommonCallback<String> {
+                        override fun onSuccess(result: String) {
+                            if (JsonSyncUtils.getJsonValue(result, "cw") == "0") {
+                                startActivity(Intent(activity, GovernMainActivity::class.java))
+                            } else ToastUtil.showToastL("暂无进入权限...")
+                        }
+
+                        override fun onError(ex: Throwable?, isOnCallback: Boolean) {
+                        }
+
+                        override fun onCancelled(cex: Callback.CancelledException?) {
+                        }
+
+                        override fun onFinished() {
+                        }
+                    })
+                } else AlertDialog.Builder(activity).setTitle("你还没有登录哦").setMessage("是否立即登录？").setPositiveButton("确认", { _, _ ->
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }).setNegativeButton("取消", null).show()
             }
         }
     }
